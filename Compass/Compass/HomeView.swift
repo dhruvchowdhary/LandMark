@@ -13,12 +13,14 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            Image("mountain-background1")
-                .resizable()
-                .scaledToFill()
-                .edgesIgnoringSafeArea(.all)
-                .offset(y: tabBarOffset - UIScreen.main.bounds.height * 0.55) // Add this line to adjust the background offset
-            Text("Hello, World!")
+            ZStack {
+                Image("mountain-background1")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+                Text("Hello, World!")
+            }
+            .offset(y: tabBarOffset - UIScreen.main.bounds.height * 0.55) // To adjust the view offset
             
             VStack {
                 VStack {
