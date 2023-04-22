@@ -14,6 +14,7 @@
 		775C2F7F29F3C3AC00D4A00D /* CompassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F7E29F3C3AC00D4A00D /* CompassTests.swift */; };
 		775C2F8929F3C3AC00D4A00D /* CompassUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F8829F3C3AC00D4A00D /* CompassUITests.swift */; };
 		775C2F8B29F3C3AC00D4A00D /* CompassUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F8A29F3C3AC00D4A00D /* CompassUITestsLaunchTests.swift */; };
+		775C2F9929F3CA1800D4A00D /* LargeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F9829F3CA1800D4A00D /* LargeButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		775C2F8429F3C3AC00D4A00D /* CompassUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompassUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		775C2F8829F3C3AC00D4A00D /* CompassUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassUITests.swift; sourceTree = "<group>"; };
 		775C2F8A29F3C3AC00D4A00D /* CompassUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		775C2F9829F3CA1800D4A00D /* LargeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 		775C2F6C29F3C3AB00D4A00D /* Compass */ = {
 			isa = PBXGroup;
 			children = (
+				775C2F9729F3CA0000D4A00D /* Components */,
 				775C2F6D29F3C3AB00D4A00D /* CompassApp.swift */,
 				775C2F6F29F3C3AB00D4A00D /* ContentView.swift */,
 				775C2F7129F3C3AC00D4A00D /* Assets.xcassets */,
@@ -125,6 +128,14 @@
 				775C2F8A29F3C3AC00D4A00D /* CompassUITestsLaunchTests.swift */,
 			);
 			path = CompassUITests;
+			sourceTree = "<group>";
+		};
+		775C2F9729F3CA0000D4A00D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				775C2F9829F3CA1800D4A00D /* LargeButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +270,7 @@
 			files = (
 				775C2F7029F3C3AB00D4A00D /* ContentView.swift in Sources */,
 				775C2F6E29F3C3AB00D4A00D /* CompassApp.swift in Sources */,
+				775C2F9929F3CA1800D4A00D /* LargeButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
