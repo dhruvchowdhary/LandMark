@@ -1,5 +1,6 @@
 import SwiftUI
 import CoreLocation
+import CoreMotion
 
 struct ContentView: View {
 
@@ -8,7 +9,8 @@ struct ContentView: View {
     @State private var longitude: Double = 0
     @State private var currLatitude: Double = 0
     @State private var currLongitude: Double = 0
-    @State private var userHeading: CLLocationDirection = 0.0
+    @State private var userHeading: Double = 0.0
+    let motionManager = CMMotionManager()
     
     var body: some View {
         VStack {
@@ -17,7 +19,7 @@ struct ContentView: View {
                 .foregroundColor(.accentColor)
             Text("Latitude: \(latitude), Longitude: \(longitude)")
             Text("Current Location: \(currLatitude), \(currLongitude)")
-            Text("Heading: \(userHeading)")
+            Text("Rotation: \(userHeading)")
             Button("Get Location") {
                 getLocation()
             }
@@ -25,6 +27,16 @@ struct ContentView: View {
         .padding()
         .onAppear() {
             updateLocation()
+            motionManager.startDeviceMotionUpdates()
+            motionManager.startDeviceMotionUpdates(to: .main) { motion, error in
+                guard let motion = motion else { return }
+                let attitude = motion.attitude
+                userHeading = attitude.yaw * 180 / .pi
+                print(userHeading)
+            }
+        }
+        .onDisappear() {
+            motionManager.stopDeviceMotionUpdates()
         }
     }
 
@@ -49,44 +61,12 @@ struct ContentView: View {
             if CLLocationManager.locationServicesEnabled() {
                 locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
                 locationManager.startUpdatingLocation()
-                locationManager.startUpdatingHeading()
                 let currLocation = locationManager.location?.coordinate
                 currLatitude = currLocation?.latitude ?? 0
                 currLongitude = currLocation?.longitude ?? 0
-                userHeading = locationManager.heading?.trueHeading ?? 0.0
             }
-            getBearing(lat1: UserDefaults.standard.double(forKey: "setLatitude"), lon1: UserDefaults.standard.double(forKey: "setLongitude"), lat2: currLatitude, lon2: currLongitude)
         }
         timer.fire()
-    }
-
-    func getBearing(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> CLLocationDirection {
-        let dLon = lon2 - lon1
-
-        let y = sin(dLon) * cos(lat2)
-        let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon)
-
-        var radiansBearing = atan2(y, x)
-        if radiansBearing < 0 {
-            radiansBearing += 2 * Double.pi
-        }
-        print(radiansBearing.radiansToDegrees)
-
-        return radiansBearing.radiansToDegrees
-    }
-
-    func doComputeAngleBetweenMapPoints(fromHeading: CLLocationDirection, lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> CLLocationDirection {
-        let bearing = getBearing(lat1: lat1, lon1: lon1, lat2: lat2, lon2: lon2)
-        var theta = bearing - fromHeading
-        if theta < 0 {
-            theta += 360
-        }
-        return theta
-    }
-}
-extension Double {
-    var radiansToDegrees: Double {
-        return self * 180.0 / Double.pi
     }
 }
 
