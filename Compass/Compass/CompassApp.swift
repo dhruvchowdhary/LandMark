@@ -11,8 +11,8 @@ import SwiftUI
 struct CompassApp: App {
     var body: some Scene {
         WindowGroup {
-           // ContentView()
-            SwiftUIView()
+           ContentView()
+           // SwiftUIView()
         }
     }
 }

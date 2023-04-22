@@ -10,9 +10,8 @@ struct ContentView: View {
     @State private var currLatitude: Double = 0
     @State private var currLongitude: Double = 0
     @State private var userHeading: Double = 0.0
-    let motionManager = CMMotionManager()
+    @State private var angle: Double = 0.0
     let angleCalculator = AngleCalculator()
-    let currentHeading: CLLocationDirection = 90.0
 
     var body: some View {
         VStack {
@@ -22,24 +21,12 @@ struct ContentView: View {
             Text("Latitude: \(latitude), Longitude: \(longitude)")
             Text("Current Location: \(currLatitude), \(currLongitude)")
             Text("Rotation: \(userHeading)")
+            Text("Angle: \(angle)")
             Button("Get Location") {
                 getLocation()
             }
         }
         .padding()
-        .onAppear() {
-            updateLocation()
-            motionManager.startDeviceMotionUpdates()
-            motionManager.startDeviceMotionUpdates(to: .main) { motion, error in
-                guard let motion = motion else { return }
-                let attitude = motion.attitude
-                userHeading = attitude.yaw * 180 / .pi
-                print(userHeading)
-            }
-        }
-        .onDisappear() {
-            motionManager.stopDeviceMotionUpdates()
-        }
     }
 
     func getLocation() {
@@ -68,38 +55,18 @@ struct ContentView: View {
                 currLatitude = currLocation?.latitude ?? 0
                 currLongitude = currLocation?.longitude ?? 0
 
-                if let userLocation = userLocation {
-                    let currLoc = CLLocation(latitude: currLatitude, longitude: currLongitude)
-                    let destLoc = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
-                    let bearing = currLoc.bearing(to: destLoc)
-                    userHeading = bearing.toDegrees()
+                // Get the current heading
+                if let heading = locationManager.heading?.trueHeading {
+                    userHeading = heading
                 }
+
+                // Calculate the angle between the user's current location and the target location
+                let targetLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                angle = angleCalculator.computeAngle(from: currLocation ?? CLLocationCoordinate2D(),
+                                                      to: targetLocation,
+                                                      with: userHeading)
             }
         }
         timer.fire()
     }
 }
-
-extension CLLocation {
-    func bearing(to destination: CLLocation) -> Double {
-        let lat1 = self.coordinate.latitude * Double.pi / 180.0
-        let lon1 = self.coordinate.longitude * Double.pi / 180.0
-        let lat2 = destination.coordinate.latitude * Double.pi / 180.0
-        let lon2 = destination.coordinate.longitude * Double.pi / 180.0
-
-        let dLon = lon2 - lon1
-
-        let y = sin(dLon) * cos(lat2)
-        let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon)
-        let radiansBearing = atan2(y, x)
-
-        return radiansBearing * 180 / Double.pi
-    }
-}
-
-extension Double {
-    func toDegrees() -> Double {
-        return self * 180.0 / Double.pi
-    }
-}
-
