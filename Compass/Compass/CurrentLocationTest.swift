@@ -11,9 +11,9 @@ import CoreLocation
 let locationManager = CLLocationManager()
 
 
-locationManager.delegate = self;
-//Get's location once
-locationManager.requestLocation()
+//locationManager.delegate = self;
+////Get's location once
+//locationManager.requestLocation()
 
 
 func locationManager(
@@ -40,7 +40,7 @@ func locationManager(
 
 
 // gotta request location yk
-locationManager.requestAlwaysAuthorization()
+//locationManager.requestAlwaysAuthorization()
 
 //
 //locationManager.desiredAccuracy = kCLLocationAccuracyBest
