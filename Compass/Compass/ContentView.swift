@@ -6,13 +6,14 @@ struct ContentView: View {
     
     @ObservedObject var compassHeading = CompassHeading()
 
-    @State private var userLocation: CLLocationCoordinate2D?
-    @State private var latitude: Double = 0
-    @State private var longitude: Double = 0
+    @State private var setLocation: CLLocationCoordinate2D?
+    @State private var setLatitude: Double = 0
+    @State private var setLongitude: Double = 0
     @State private var currLatitude: Double = 0
     @State private var currLongitude: Double = 0
     @State private var userHeading: Double = 0.0
-    @State private var angle: Double = 0.0
+    @State private var angleFromNorth: Double = 0.0
+    @State private var arrowAngle: Double = 0.0
     let angleCalculator = AngleCalculator()
 
     var body: some View {
@@ -20,10 +21,11 @@ struct ContentView: View {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
-            Text("Latitude: \(latitude), Longitude: \(longitude)")
+            Text("Latitude: \(setLatitude), Longitude: \(setLongitude)")
             Text("Current Location: \(currLatitude), \(currLongitude)")
 //            Text("Rotation: \(userHeading)")
-            Text("Degrees from North: \(angle)")
+            Text("Degrees from North: \(angleFromNorth)")
+            Text("Arrow Angle: \(arrowAngle)")
             Button("Set Location") {
                 getLocation()
             }
@@ -40,12 +42,15 @@ struct ContentView: View {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            userLocation = locationManager.location?.coordinate
-            UserDefaults.standard.set(userLocation?.latitude ?? 0, forKey: "setLatitude")
-            UserDefaults.standard.set(userLocation?.longitude ?? 0, forKey: "setLongitude")
-            latitude = Double(UserDefaults.standard.float(forKey: "setLatitude"))
-            longitude = Double(UserDefaults.standard.float(forKey: "setLongitude"))
-            print("Latitude: \(latitude), Longitude: \(longitude)")
+            setLocation = locationManager.location?.coordinate
+            setLatitude = setLocation?.latitude ?? 0.0
+            setLongitude = setLocation?.longitude ?? 0.0
+            UserDefaults.standard.set(setLatitude, forKey: "setLatitude")
+            UserDefaults.standard.set(setLongitude, forKey: "setLongitude")
+//            currLocation = locationManager.location?.coordinate
+//            currLatitude = Double(UserDefaults.standard.float(forKey: "setLatitude"))
+//            currLongitude = Double(UserDefaults.standard.float(forKey: "setLongitude"))
+            print("Latitude: \(setLatitude), Longitude: \(setLongitude)")
         }
     }
 
@@ -57,34 +62,28 @@ struct ContentView: View {
                 locationManager.desiredAccuracy = kCLLocationAccuracyBest
                 locationManager.startUpdatingLocation()
                 locationManager.startUpdatingHeading()
+                
                 let currLocation = locationManager.location?.coordinate
-                currLatitude = currLocation?.latitude ?? 0
-                currLongitude = currLocation?.longitude ?? 0
+                currLatitude = Double(UserDefaults.standard.float(forKey: "setLatitude"))
+                currLongitude = Double(UserDefaults.standard.float(forKey: "setLongitude"))
                 
-//                if let heading = locationManager.heading?.trueHeading {
-//                    userHeading = locationManager.heading?.trueHeading
-//                }
-                
-//                let targetLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-//                angle = angleCalculator.computeAngle(from: currLocation ?? CLLocationCoordinate2D(), to: targetLocation, with: self.compassHeading.degrees)
-                
-                angle = self.compassHeading.degrees
+                let userLocation = locationManager.location?.coordinate
+                angleFromNorth = self.compassHeading.degrees
+                let angleToGoal = angleBetweenTwoLocations(fromLat: userLocation?.latitude ?? 0.0, fromLong: userLocation?.longitude ?? 0.0, toLat: setLatitude ?? 0.0, toLong: setLongitude ?? 0.0)
+                arrowAngle = angleToGoal - angleFromNorth
             }
         }
         timer.fire()
     }
     
-    func angleBetweenTWoLocations(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D) -> Double {
-        let deltaLongitude = to.longitude - from.longitude
-        let y = sin(deltaLongitude) * cos(to.latitude)
-        let x = cos(from.latitude) * sin(to.latitude) - sin(from.latitude) * cos(to.latitude) * cos(deltaLongitude)
+    func angleBetweenTwoLocations(fromLat: Double, fromLong: Double, toLat: Double, toLong: Double) -> Double {
+        let deltaLongitude = toLong - fromLong
+        let y = sin(deltaLongitude) * cos(toLat)
+        let x = cos(fromLat) * sin(toLat) - sin(fromLat) * cos(toLat) * cos(deltaLongitude)
         let radians = atan2(y, x)
         let degrees = radians * 180 / .pi
         return degrees
     }
-    
-    
-
 }
 
 
