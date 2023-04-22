@@ -58,7 +58,8 @@ struct ContentView: View {
                 currLatitude = currLocation?.latitude ?? 0
                 currLongitude = currLocation?.longitude ?? 0
             }
-            getBearing(lat1: UserDefaults.standard.double(forKey: "setLatitude"), lon1: UserDefaults.standard.double(forKey: "setLongitude"), lat2: currLatitude, lon2: currLongitude)
+           // getBearing(lat1: UserDefaults.standard.double(forKey: "setLatitude"), lon1: UserDefaults.standard.double(forKey: "setLongitude"), lat2: currLatitude, lon2: currLongitude)
+            doComputeAngleBetweenMapPoints(fromHeading: 0.0, lat1: UserDefaults.standard.double(forKey: "setLatitude"), lon1: UserDefaults.standard.double(forKey: "setLongitude"), lat2: currLatitude, lon2: currLongitude)
         }
         timer.fire()
     }
@@ -76,6 +77,18 @@ struct ContentView: View {
         print(radiansBearing.radiansToDegrees)
 
         return radiansBearing.radiansToDegrees
+    }
+    
+    func doComputeAngleBetweenMapPoints(
+        fromHeading: CLLocationDirection,
+    lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> CLLocationDirection {
+        let bearing = getBearing(lat1: lat1, lon1: lon1, lat2: lat2, lon2: lon2)
+        var theta = bearing - fromHeading
+        if theta < 0 {
+            theta += 360
+        }
+        print("theta: " + String(theta))
+        return theta
     }
     
     
