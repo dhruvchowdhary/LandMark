@@ -11,6 +11,8 @@ struct ContentView: View {
     @State private var currLongitude: Double = 0
     @State private var userHeading: Double = 0.0
     let motionManager = CMMotionManager()
+    let angleCalculator = AngleCalculator()
+    let currentHeading: CLLocationDirection = 90.0
 
     var body: some View {
         VStack {
@@ -59,8 +61,9 @@ struct ContentView: View {
             let locationManager = CLLocationManager()
             locationManager.requestWhenInUseAuthorization()
             if CLLocationManager.locationServicesEnabled() {
-                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
                 locationManager.startUpdatingLocation()
+                locationManager.startUpdatingHeading()
                 let currLocation = locationManager.location?.coordinate
                 currLatitude = currLocation?.latitude ?? 0
                 currLongitude = currLocation?.longitude ?? 0
