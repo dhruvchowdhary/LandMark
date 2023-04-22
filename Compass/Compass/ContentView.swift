@@ -48,7 +48,7 @@ struct ContentView: View {
     }
     
     func updateLocation() {
-        let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+        let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
             let locationManager = CLLocationManager()
             locationManager.requestWhenInUseAuthorization()
             if CLLocationManager.locationServicesEnabled() {
