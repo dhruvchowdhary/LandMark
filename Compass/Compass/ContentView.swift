@@ -41,8 +41,8 @@ struct ContentView: View {
             userLocation = locationManager.location?.coordinate
             UserDefaults.standard.set(userLocation?.latitude ?? 0, forKey: "setLatitude")
             UserDefaults.standard.set(userLocation?.longitude ?? 0, forKey: "setLongitude")
-            latitude = Double(UserDefaults.standard.float(forKey: "setLatitude"))
-            longitude = Double(UserDefaults.standard.float(forKey: "setLongitude"))
+            latitude = Double(UserDefaults.standard.double(forKey: "setLatitude"))
+            longitude = Double(UserDefaults.standard.double(forKey: "setLongitude"))
             print("Latitude: \(latitude), Longitude: \(longitude)")
         }
     }
@@ -58,8 +58,31 @@ struct ContentView: View {
                 currLatitude = currLocation?.latitude ?? 0
                 currLongitude = currLocation?.longitude ?? 0
             }
+            getBearing(lat1: UserDefaults.standard.double(forKey: "setLatitude"), lon1: UserDefaults.standard.double(forKey: "setLongitude"), lat2: currLatitude, lon2: currLongitude)
         }
         timer.fire()
+    }
+    
+    func getBearing(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
+        let dLon = lon2 - lon1
+
+        let y = sin(dLon) * cos(lat2)
+        let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon)
+
+        var radiansBearing = atan2(y, x)
+        if radiansBearing < 0 {
+            radiansBearing += 2 * Double.pi
+        }
+        print(radiansBearing.radiansToDegrees)
+
+        return radiansBearing.radiansToDegrees
+    }
+    
+    
+}
+extension Double {
+    var radiansToDegrees: Double {
+        return self * 180.0 / Double.pi
     }
 }
 
