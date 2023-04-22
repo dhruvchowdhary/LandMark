@@ -27,6 +27,9 @@ struct ContentView: View {
             }
         }
         .padding()
+        .onAppear {
+            updateLocation()
+        }
     }
 
     func getLocation() {
@@ -54,19 +57,17 @@ struct ContentView: View {
                 let currLocation = locationManager.location?.coordinate
                 currLatitude = currLocation?.latitude ?? 0
                 currLongitude = currLocation?.longitude ?? 0
-
-                // Get the current heading
+                
                 if let heading = locationManager.heading?.trueHeading {
                     userHeading = heading
                 }
-
-                // Calculate the angle between the user's current location and the target location
+                
                 let targetLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                angle = angleCalculator.computeAngle(from: currLocation ?? CLLocationCoordinate2D(),
-                                                      to: targetLocation,
-                                                      with: userHeading)
+                angle = angleCalculator.computeAngle(from: currLocation ?? CLLocationCoordinate2D(), to: targetLocation, with: userHeading)
             }
         }
         timer.fire()
     }
 }
+
+
