@@ -31,13 +31,25 @@ struct ContentView: View {
             motionManager.startDeviceMotionUpdates(to: .main) { motion, error in
                 guard let motion = motion else { return }
                 let attitude = motion.attitude
-                userHeading = attitude.yaw * 180 / .pi
-                print(userHeading)
+                let yaw = attitude.yaw * 180 / .pi
+                if currLatitude != 0 && currLongitude != 0 && abs(yaw - bearingBetweenLocations(latitude1: latitude, longitude1: longitude, latitude2: currLatitude, longitude2: currLongitude)) <= 10 {
+                    userHeading = 0.0
+                } else {
+                    userHeading = yaw
+                }
             }
         }
         .onDisappear() {
             motionManager.stopDeviceMotionUpdates()
         }
+    }
+    
+    func bearingBetweenLocations(latitude1: Double, longitude1: Double, latitude2: Double, longitude2: Double) -> Double {
+        let dLon = (longitude2 - longitude1)
+        let y = sin(dLon) * cos(latitude2)
+        let x = cos(latitude1) * sin(latitude2) - sin(latitude1) * cos(latitude2) * cos(dLon)
+        let radiansBearing = atan2(y, x)
+        return radiansBearing * 180 / .pi
     }
 
     func getLocation() {
