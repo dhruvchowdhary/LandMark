@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02ADD66629F3CE6700B8C1F9 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ADD66529F3CE6700B8C1F9 /* SwiftUIView.swift */; };
 		02ADD66929F3F56400B8C1F9 /* AngleCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ADD66829F3F56400B8C1F9 /* AngleCalculator.swift */; };
 		3E4B627629F3C93400536478 /* CurrentLocationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4B627529F3C93400536478 /* CurrentLocationTest.swift */; };
 		775C2F6E29F3C3AB00D4A00D /* CompassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F6D29F3C3AB00D4A00D /* CompassApp.swift */; };
@@ -18,6 +17,7 @@
 		775C2F8929F3C3AC00D4A00D /* CompassUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F8829F3C3AC00D4A00D /* CompassUITests.swift */; };
 		775C2F8B29F3C3AC00D4A00D /* CompassUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F8A29F3C3AC00D4A00D /* CompassUITestsLaunchTests.swift */; };
 		775C2F9929F3CA1800D4A00D /* LargeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F9829F3CA1800D4A00D /* LargeButton.swift */; };
+		775C2F9B29F482B200D4A00D /* CompassHeading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F9A29F482B100D4A00D /* CompassHeading.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +38,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		02ADD66529F3CE6700B8C1F9 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		02ADD66729F3D34300B8C1F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		02ADD66829F3F56400B8C1F9 /* AngleCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AngleCalculator.swift; sourceTree = "<group>"; };
 		3E4B627529F3C93400536478 /* CurrentLocationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationTest.swift; sourceTree = "<group>"; };
@@ -53,6 +52,7 @@
 		775C2F8829F3C3AC00D4A00D /* CompassUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassUITests.swift; sourceTree = "<group>"; };
 		775C2F8A29F3C3AC00D4A00D /* CompassUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		775C2F9829F3CA1800D4A00D /* LargeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButton.swift; sourceTree = "<group>"; };
+		775C2F9A29F482B100D4A00D /* CompassHeading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassHeading.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,10 +107,10 @@
 				775C2F6D29F3C3AB00D4A00D /* CompassApp.swift */,
 				775C2F6F29F3C3AB00D4A00D /* ContentView.swift */,
 				3E4B627529F3C93400536478 /* CurrentLocationTest.swift */,
-				02ADD66529F3CE6700B8C1F9 /* SwiftUIView.swift */,
 				02ADD66829F3F56400B8C1F9 /* AngleCalculator.swift */,
 				775C2F7129F3C3AC00D4A00D /* Assets.xcassets */,
 				775C2F7329F3C3AC00D4A00D /* Preview Content */,
+				775C2F9A29F482B100D4A00D /* CompassHeading.swift */,
 			);
 			path = Compass;
 			sourceTree = "<group>";
@@ -282,9 +282,9 @@
 				775C2F7029F3C3AB00D4A00D /* ContentView.swift in Sources */,
 				3E4B627629F3C93400536478 /* CurrentLocationTest.swift in Sources */,
 				775C2F6E29F3C3AB00D4A00D /* CompassApp.swift in Sources */,
+				775C2F9B29F482B200D4A00D /* CompassHeading.swift in Sources */,
 				02ADD66929F3F56400B8C1F9 /* AngleCalculator.swift in Sources */,
 				775C2F9929F3CA1800D4A00D /* LargeButton.swift in Sources */,
-				02ADD66629F3CE6700B8C1F9 /* SwiftUIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,7 +443,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Compass/Preview Content\"";
-				DEVELOPMENT_TEAM = DUXN239A3S;
+				DEVELOPMENT_TEAM = 26453Y97UW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs access to your location to provide you with personalized recommendations.";
@@ -457,7 +457,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dhruv.chowdhary;
+				PRODUCT_BUNDLE_IDENTIFIER = rtaneja.CompassTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

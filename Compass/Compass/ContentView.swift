@@ -3,6 +3,8 @@ import CoreLocation
 import CoreMotion
 
 struct ContentView: View {
+    
+    @ObservedObject var compassHeading = CompassHeading()
 
     @State private var userLocation: CLLocationCoordinate2D?
     @State private var latitude: Double = 0
@@ -20,9 +22,9 @@ struct ContentView: View {
                 .foregroundColor(.accentColor)
             Text("Latitude: \(latitude), Longitude: \(longitude)")
             Text("Current Location: \(currLatitude), \(currLongitude)")
-            Text("Rotation: \(userHeading)")
-            Text("Angle: \(angle)")
-            Button("Get Location") {
+//            Text("Rotation: \(userHeading)")
+            Text("Degrees from North: \(angle)")
+            Button("Set Location") {
                 getLocation()
             }
         }
@@ -36,6 +38,7 @@ struct ContentView: View {
         let locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             userLocation = locationManager.location?.coordinate
             UserDefaults.standard.set(userLocation?.latitude ?? 0, forKey: "setLatitude")
@@ -58,12 +61,14 @@ struct ContentView: View {
                 currLatitude = currLocation?.latitude ?? 0
                 currLongitude = currLocation?.longitude ?? 0
                 
-                if let heading = locationManager.heading?.trueHeading {
-                    userHeading = heading
-                }
+//                if let heading = locationManager.heading?.trueHeading {
+//                    userHeading = locationManager.heading?.trueHeading
+//                }
                 
-                let targetLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                angle = angleCalculator.computeAngle(from: currLocation ?? CLLocationCoordinate2D(), to: targetLocation, with: userHeading)
+//                let targetLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+//                angle = angleCalculator.computeAngle(from: currLocation ?? CLLocationCoordinate2D(), to: targetLocation, with: self.compassHeading.degrees)
+                
+                angle = self.compassHeading.degrees
             }
         }
         timer.fire()
