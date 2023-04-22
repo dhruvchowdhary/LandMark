@@ -11,19 +11,21 @@ import CoreLocation
 struct ContentView: View {
     
     @State private var userLocation: CLLocationCoordinate2D?
+    @State private var latitude: Double = 0
+    @State private var longitude: Double = 0
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-            Button("Get Location") {
-                getLocation()
+            VStack {
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundColor(.accentColor)
+                Text("Latitude: \(latitude), Longitude: \(longitude)")
+                Button("Get Location") {
+                    getLocation()
+                }
             }
+            .padding()
         }
-        .padding()
-    }
     
     func getLocation() {
         let locationManager = CLLocationManager()
@@ -32,7 +34,9 @@ struct ContentView: View {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
             userLocation = locationManager.location?.coordinate
-            print("Latitude: \(userLocation?.latitude ?? 0), Longitude: \(userLocation?.longitude ?? 0)")
+            latitude = userLocation?.latitude ?? 0
+            longitude = userLocation?.longitude ?? 0
+            print("Latitude: \(latitude), Longitude: \(longitude)")
         }
     }
 }
