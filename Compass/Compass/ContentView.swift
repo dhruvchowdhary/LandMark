@@ -67,23 +67,53 @@ struct ContentView: View {
                 currLatitude = Double(UserDefaults.standard.float(forKey: "setLatitude"))
                 currLongitude = Double(UserDefaults.standard.float(forKey: "setLongitude"))
                 
-                let userLocation = locationManager.location?.coordinate
                 angleFromNorth = self.compassHeading.degrees
-                let angleToGoal = angleBetweenTwoLocations(fromLat: userLocation?.latitude ?? 0.0, fromLong: userLocation?.longitude ?? 0.0, toLat: setLatitude ?? 0.0, toLong: setLongitude ?? 0.0)
-                arrowAngle = angleToGoal - angleFromNorth
+                let userLocation = locationManager.location?.coordinate
+
+                let bearing = angleBetweenTwoLocations( fromLat: userLocation?.latitude ?? 0.0, fromLong: userLocation?.longitude ?? 0.0, toLat: setLatitude, toLong: setLongitude)
+                
+                var theta = bearing - angleFromNorth
+                if theta < 0 {
+                    theta += 360
+                }
+                
+                arrowAngle = theta
+                
+//                angleFromNorth = self.compassHeading.degrees
+//                let angleToGoal = angleBetweenTwoLocations(fromLat: userLocation?.latitude ?? 0.0, fromLong: userLocation?.longitude ?? 0.0, toLat: setLatitude ?? 0.0, toLong: setLongitude ?? 0.0)
+//                arrowAngle = angleFromNorth - angleToGoal
+//                if arrowAngle < 0 {
+//                    arrowAngle += 360
+//                }
             }
         }
         timer.fire()
     }
     
     func angleBetweenTwoLocations(fromLat: Double, fromLong: Double, toLat: Double, toLong: Double) -> Double {
-        let deltaLongitude = toLong - fromLong
-        let y = sin(deltaLongitude) * cos(toLat)
-        let x = cos(fromLat) * sin(toLat) - sin(fromLat) * cos(toLat) * cos(deltaLongitude)
-        let radians = atan2(y, x)
-        let degrees = radians * 180 / .pi
-        return degrees
+        let fromLatRad = fromLat.degreesToRadians
+        let fromLongRad = fromLong.degreesToRadians
+
+        let toLatRad = toLat.degreesToRadians
+        let toLongRad = toLong.degreesToRadians
+
+        let dLon = toLongRad - fromLongRad
+
+        let y = sin(dLon) * cos(toLatRad)
+        let x = cos(fromLatRad) * sin(toLatRad) - sin(fromLatRad) * cos(toLatRad) * cos(dLon)
+
+        var radiansBearing = atan2(y, x)
+        if radiansBearing < 0 {
+            radiansBearing += 2 * Double.pi
+        }
+
+        return radiansBearing.radiansToDegrees
     }
+}
+
+private extension Double {
+    var degreesToRadians: Double { return self * .pi / 180 }
+    var radiansToDegrees: Double { return self * 180 / .pi }
 }
 
 
