@@ -73,6 +73,18 @@ struct ContentView: View {
         }
         timer.fire()
     }
+    
+    func angleBetweenTWoLocations(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D) -> Double {
+        let deltaLongitude = to.longitude - from.longitude
+        let y = sin(deltaLongitude) * cos(to.latitude)
+        let x = cos(from.latitude) * sin(to.latitude) - sin(from.latitude) * cos(to.latitude) * cos(deltaLongitude)
+        let radians = atan2(y, x)
+        let degrees = radians * 180 / .pi
+        return degrees
+    }
+    
+    
+
 }
 
 
