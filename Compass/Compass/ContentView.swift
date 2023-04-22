@@ -32,10 +32,11 @@ struct ContentView: View {
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
             userLocation = locationManager.location?.coordinate
-            latitude = userLocation?.latitude ?? 0
-            longitude = userLocation?.longitude ?? 0
+            UserDefaults.standard.set(userLocation?.latitude ?? 0, forKey: "setLatitude")
+            UserDefaults.standard.set(userLocation?.longitude ?? 0, forKey: "setLongitude")
+            latitude = Double(UserDefaults.standard.float(forKey: "setLatitude"))
+            longitude = Double(UserDefaults.standard.float(forKey: "setLongitude"))
             print("Latitude: \(latitude), Longitude: \(longitude)")
         }
     }
