@@ -63,19 +63,20 @@ struct CircleGraphView: View {
                         if index == 6 {
                             Circle()
                                 .fill(Color.white.opacity(0.3))
-                                .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
+                                .frame(width: width / 6.3 * CGFloat(index), height: height / 6.3 * CGFloat(index))
                                 .position(x: centerX, y: centerY)
                             // Add image on top of largest concentric circle
                             Image("Arrow-1")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
-                                .position(x: centerX, y: -5 + centerY - height / 6 * CGFloat(index) / 2 - 15)
+                                .position(x: centerX, y: 10 + centerY - height / 6 * CGFloat(index) / 2 - 15)
+                                .rotationEffect(Angle(degrees: 360 - angleFromNorth))
                                                     
                         } else {
                             Circle()
                                 .stroke(Color(red: 105.0, green: 105.0, blue: 105.0), lineWidth: 1)
-                                .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
+                                .frame(width: width / 6.3 * CGFloat(index), height: height / 6.3 * CGFloat(index))
                                 .position(x: centerX, y: centerY)
                         }
                     }
@@ -121,13 +122,17 @@ struct CircleGraphView: View {
                                 .background(Color(#colorLiteral(red: 0.91, green: 0.91, blue: 0.91, alpha: 1.0)))
                                 .cornerRadius(15)
                                 .offset(y: 280)
+                }
+
+            }.onAppear{
+                updateLocation()
             }
             
         }
-    }
+    
     
     func scaleCoordinates(coordinates: [(Double, Double)], width: Double, height: Double) -> [(Double, Double)] {
-        print(coordinates)
+        //print(coordinates)
         let xMax = coordinates.map { $0.0 }.max()!
         let yMax = coordinates.map { $0.1 }.max()!
         let xMin = coordinates.map { $0.0 }.min()!
@@ -144,15 +149,15 @@ struct CircleGraphView: View {
                 
         let xScale = width * 0.25 / xRange
         let yScale = height * 0.25 / yRange
-        print(xScale, yScale)
-        print(coordinates.map { ($0.0 * xScale, $0.1 * yScale) })
+        //print(xScale, yScale)
+        //print(coordinates.map { ($0.0 * xScale, $0.1 * yScale) })
         return coordinates.map { ($0.0 * xScale, $0.1 * yScale) }
     }
     
     func shiftCoordinates(coordinates: [(Double, Double)], lastCoordinate: (Double, Double)) -> [(Double, Double)] {
         let xShift = lastCoordinate.0
         let yShift = lastCoordinate.1
-        print(coordinates.map { ($0.0 - xShift, $0.1 - yShift) })
+        //print(coordinates.map { ($0.0 - xShift, $0.1 - yShift) })
         return coordinates.map { ($0.0 - xShift, $0.1 - yShift) }
     }
     
