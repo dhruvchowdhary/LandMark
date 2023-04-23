@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0281762429F4860C009EC1E9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0281762329F4860C009EC1E9 /* HomeView.swift */; };
-		02ADD66929F3F56400B8C1F9 /* AngleCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02ADD66829F3F56400B8C1F9 /* AngleCalculator.swift */; };
-		3E4B627629F3C93400536478 /* CurrentLocationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4B627529F3C93400536478 /* CurrentLocationTest.swift */; };
 		775C2F6E29F3C3AB00D4A00D /* CompassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F6D29F3C3AB00D4A00D /* CompassApp.swift */; };
 		775C2F7029F3C3AB00D4A00D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F6F29F3C3AB00D4A00D /* ContentView.swift */; };
 		775C2F7229F3C3AC00D4A00D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 775C2F7129F3C3AC00D4A00D /* Assets.xcassets */; };
@@ -41,8 +39,6 @@
 /* Begin PBXFileReference section */
 		0281762329F4860C009EC1E9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		02ADD66729F3D34300B8C1F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		02ADD66829F3F56400B8C1F9 /* AngleCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AngleCalculator.swift; sourceTree = "<group>"; };
-		3E4B627529F3C93400536478 /* CurrentLocationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationTest.swift; sourceTree = "<group>"; };
 		775C2F6A29F3C3AB00D4A00D /* Compass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Compass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		775C2F6D29F3C3AB00D4A00D /* CompassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassApp.swift; sourceTree = "<group>"; };
 		775C2F6F29F3C3AB00D4A00D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -108,8 +104,6 @@
 				775C2F9729F3CA0000D4A00D /* Components */,
 				775C2F6D29F3C3AB00D4A00D /* CompassApp.swift */,
 				775C2F6F29F3C3AB00D4A00D /* ContentView.swift */,
-				3E4B627529F3C93400536478 /* CurrentLocationTest.swift */,
-				02ADD66829F3F56400B8C1F9 /* AngleCalculator.swift */,
 				0281762329F4860C009EC1E9 /* HomeView.swift */,
 				775C2F7129F3C3AC00D4A00D /* Assets.xcassets */,
 				775C2F7329F3C3AC00D4A00D /* Preview Content */,
@@ -284,10 +278,8 @@
 			files = (
 				775C2F7029F3C3AB00D4A00D /* ContentView.swift in Sources */,
 				0281762429F4860C009EC1E9 /* HomeView.swift in Sources */,
-				3E4B627629F3C93400536478 /* CurrentLocationTest.swift in Sources */,
 				775C2F6E29F3C3AB00D4A00D /* CompassApp.swift in Sources */,
 				775C2F9B29F482B200D4A00D /* CompassHeading.swift in Sources */,
-				02ADD66929F3F56400B8C1F9 /* AngleCalculator.swift in Sources */,
 				775C2F9929F3CA1800D4A00D /* LargeButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

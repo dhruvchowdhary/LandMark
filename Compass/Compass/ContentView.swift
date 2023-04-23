@@ -14,7 +14,6 @@ struct ContentView: View {
     @State private var userHeading: Double = 0.0
     @State private var angleFromNorth: Double = 0.0
     @State private var arrowAngle: Double = 0.0
-    let angleCalculator = AngleCalculator()
 
     var body: some View {
         VStack {
@@ -55,37 +54,29 @@ struct ContentView: View {
     }
 
     func updateLocation() {
-        let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
-            let locationManager = CLLocationManager()
-            locationManager.requestWhenInUseAuthorization()
-            if CLLocationManager.locationServicesEnabled() {
-                locationManager.desiredAccuracy = kCLLocationAccuracyBest
-                locationManager.startUpdatingLocation()
-                locationManager.startUpdatingHeading()
-                
+        let locationManager = CLLocationManager()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        locationManager.startUpdatingHeading()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        let timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
+//            if CLLocationManager.locationServicesEnabled() {
                 let currLocation = locationManager.location?.coordinate
-                currLatitude = Double(UserDefaults.standard.float(forKey: "setLatitude"))
-                currLongitude = Double(UserDefaults.standard.float(forKey: "setLongitude"))
+                currLatitude = currLocation?.latitude ?? 0.0
+                currLongitude = currLocation?.longitude ?? 0.0
                 
-                angleFromNorth = self.compassHeading.degrees
-                let userLocation = locationManager.location?.coordinate
+                angleFromNorth = self.compassHeading.degrees * -1
 
-                let bearing = angleBetweenTwoLocations( fromLat: userLocation?.latitude ?? 0.0, fromLong: userLocation?.longitude ?? 0.0, toLat: setLatitude, toLong: setLongitude)
+                let bearing = angleBetweenTwoLocations(fromLat: currLatitude, fromLong: currLongitude, toLat: setLatitude, toLong: setLongitude)
                 
                 var theta = bearing - angleFromNorth
                 if theta < 0 {
-                    theta += 360
+                    arrowAngle = theta + 360
+                } else {
+                    arrowAngle = theta
                 }
-                
-                arrowAngle = theta
-                
-//                angleFromNorth = self.compassHeading.degrees
-//                let angleToGoal = angleBetweenTwoLocations(fromLat: userLocation?.latitude ?? 0.0, fromLong: userLocation?.longitude ?? 0.0, toLat: setLatitude ?? 0.0, toLong: setLongitude ?? 0.0)
-//                arrowAngle = angleFromNorth - angleToGoal
-//                if arrowAngle < 0 {
-//                    arrowAngle += 360
-//                }
-            }
+//            }
         }
         timer.fire()
     }
@@ -102,18 +93,19 @@ struct ContentView: View {
         let y = sin(dLon) * cos(toLatRad)
         let x = cos(fromLatRad) * sin(toLatRad) - sin(fromLatRad) * cos(toLatRad) * cos(dLon)
 
-        var radiansBearing = atan2(y, x)
-        if radiansBearing < 0 {
-            radiansBearing += 2 * Double.pi
+        var degBearing = atan2(y, x).radiansToDegrees
+        
+        if (degBearing >= 0) {
+            return degBearing
+        } else {
+            return 360 + degBearing
         }
-
-        return radiansBearing.radiansToDegrees
     }
 }
 
 private extension Double {
-    var degreesToRadians: Double { return self * .pi / 180 }
-    var radiansToDegrees: Double { return self * 180 / .pi }
+    var degreesToRadians: Double { return self * (.pi / 180) }
+    var radiansToDegrees: Double { return self * (180 / .pi) }
 }
 
 
