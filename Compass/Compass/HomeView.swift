@@ -95,7 +95,7 @@ struct HomeView: View {
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
                                                 .offset(x: 0, y: -165)
-                                                .rotationEffect(Angle(degrees: 40))
+                                                .rotationEffect(Angle(degrees: 360 - angleFromNorth + 25))
                                                 .animation(.easeInOut(duration: 1))
                                         }
                     if showPtImages[2] {
@@ -104,7 +104,7 @@ struct HomeView: View {
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
                                                 .offset(x: 0, y: -165)
-                                                .rotationEffect(Angle(degrees: 60))
+                                                .rotationEffect(Angle(degrees: 360 - angleFromNorth + 45))
                                                 .animation(.easeInOut(duration: 1))
                                         }
                     if showPtImages[3] {
@@ -113,7 +113,7 @@ struct HomeView: View {
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
                                                 .offset(x: 0, y: -165)
-                                                .rotationEffect(Angle(degrees: 80))
+                                                .rotationEffect(Angle(degrees: 360 - angleFromNorth + 76))
                                                 .animation(.easeInOut(duration: 1))
                                         }
                     if showPtImages[4] {
@@ -122,7 +122,7 @@ struct HomeView: View {
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
                                                 .offset(x: 0, y: -165)
-                                                .rotationEffect(Angle(degrees: 120))
+                                                .rotationEffect(Angle(degrees: 360 - angleFromNorth + 139))
                                                 .animation(.easeInOut(duration: 1))
                                         }
                     if showPtImages[5] {
@@ -131,7 +131,7 @@ struct HomeView: View {
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
                                                 .offset(x: 0, y: -165)
-                                                .rotationEffect(Angle(degrees: 200))
+                                                .rotationEffect(Angle(degrees: 360 - angleFromNorth + 156))
                                                 .animation(.easeInOut(duration: 1))
                                         }
                     if showPtImages[6] {
@@ -140,7 +140,7 @@ struct HomeView: View {
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
                                                 .offset(x: 0, y: -165)
-                                                .rotationEffect(Angle(degrees: 300))
+                                                .rotationEffect(Angle(degrees: 360 - angleFromNorth + 215))
                                                 .animation(.easeInOut(duration: 1))
                                         }
                 }

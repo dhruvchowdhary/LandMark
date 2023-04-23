@@ -25,6 +25,7 @@ struct PTImageInput: View {
                 .frame(width: 200, height: 10)
                     .padding()
                     .background(Color.white)
+                    .foregroundColor(Color.black)
                     .cornerRadius(15)
                     .shadow(radius: 5)
                     .padding(.horizontal, 15)
