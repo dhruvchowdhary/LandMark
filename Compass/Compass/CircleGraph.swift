@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 struct CircleGraphView: View {
+    var angleFromNorth: Double 
     let coordinates: [(Double, Double)]
 
     var body: some View {
@@ -23,43 +24,58 @@ struct CircleGraphView: View {
             let shiftedCoordinates = shiftCoordinates(coordinates: scaledCoordinates, lastCoordinate: scaledCoordinates.last!)
             
             ZStack {
-                // Add concentric circles
-                ForEach(1..<6) { index in
-                    Circle()
-                        .stroke(Color.gray, lineWidth: 1)
-                        .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
-                        .position(x: centerX, y: centerY)
-                }
-                
-                Path { path in
-                    for (index, coordinate) in shiftedCoordinates.enumerated() {
-                        let x = CGFloat(coordinate.0) + centerX
-                        let y = -CGFloat(coordinate.1) + centerY
-                        if index == 0 {
-                            path.move(to: CGPoint(x: x, y: y))
+                Image("mountain-background1")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .edgesIgnoringSafeArea(.all)
+                                    .offset(y: -16)
+                ZStack{
+                    // Add concentric circles
+                    ForEach(1..<7) { index in
+                        if index == 6 {
+                            Circle()
+                                .fill(Color.white.opacity(0.3))
+                                .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
+                                .position(x: centerX, y: centerY)
                         } else {
-                            path.addLine(to: CGPoint(x: x, y: y))
+                            Circle()
+                                .stroke(Color(red: 105.0, green: 105.0, blue: 105.0), lineWidth: 1)
+                                .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
+                                .position(x: centerX, y: centerY)
                         }
                     }
-                }
-                .stroke(Color.blue, lineWidth: 2)
-                
-                ForEach(0..<shiftedCoordinates.count) { index in
-                    let coordinate = shiftedCoordinates[index]
-                    let x = CGFloat(coordinate.0) + centerX
-                    let y = -CGFloat(coordinate.1) + centerY
-                    if index == shiftedCoordinates.count - 1 {
-                        Circle()
-                            .fill(Color.green)
-                            .frame(width: 10, height: 10)
-                            .position(x: x, y: y)
-                    } else {
-                        Circle()
-                            .fill(Color.red)
-                            .frame(width: 10, height: 10)
-                            .position(x: x, y: y)
+                    
+                    Path { path in
+                        for (index, coordinate) in shiftedCoordinates.enumerated() {
+                            let x = CGFloat(coordinate.0) + centerX
+                            let y = -CGFloat(coordinate.1) + centerY
+                            if index == 0 {
+                                path.move(to: CGPoint(x: x, y: y))
+                            } else {
+                                path.addLine(to: CGPoint(x: x, y: y))
+                            }
+                        }
                     }
-                }
+                    .stroke(Color.blue, lineWidth: 2)
+                    
+                    ForEach(0..<shiftedCoordinates.count) { index in
+                        let coordinate = shiftedCoordinates[index]
+                        let x = CGFloat(coordinate.0) + centerX
+                        let y = -CGFloat(coordinate.1) + centerY
+                        if index == shiftedCoordinates.count - 1 {
+                            Circle()
+                                .fill(Color.green)
+                                .frame(width: 10, height: 10)
+                                .position(x: x, y: y)
+                        } else {
+                            Circle()
+                                .fill(Color.red)
+                                .frame(width: 10, height: 10)
+                                .position(x: x, y: y)
+                        }
+                    }
+                }.rotationEffect(Angle(degrees: 360 - angleFromNorth))
+
             }
         }
     }

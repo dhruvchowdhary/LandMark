@@ -9,12 +9,11 @@ import SwiftUI
 
 @main
 struct CompassApp: App {
-    let coordinates: [(Double, Double)] = [(0, 0), (1, 1), (2, 0), (1, -1)]
+    let coordinates: [(Double, Double)] = [(3.0001, 12.0005), (3.0002, 12.0004), (3.0005, 12.0008), (3.0008, 12.0009)]
     
     var body: some Scene {
         WindowGroup {
-//           HomeView()
-            CircleGraph(coordinates: coordinates)
+            CircleGraphView(angleFromNorth: 0.0, coordinates: coordinates )
                 .padding()
         }
     }
