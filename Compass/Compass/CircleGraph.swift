@@ -113,7 +113,7 @@ struct CircleGraphView: View {
     }
     
     func scaleCoordinates(coordinates: [(Double, Double)], width: Double, height: Double) -> [(Double, Double)] {
-        print(coordinates)
+        //print(coordinates)
         let xMax = coordinates.map { $0.0 }.max()!
         let yMax = coordinates.map { $0.1 }.max()!
         let xMin = coordinates.map { $0.0 }.min()!
@@ -130,15 +130,15 @@ struct CircleGraphView: View {
                 
         let xScale = width * 0.25 / xRange
         let yScale = height * 0.25 / yRange
-        print(xScale, yScale)
-        print(coordinates.map { ($0.0 * xScale, $0.1 * yScale) })
+        //print(xScale, yScale)
+        //print(coordinates.map { ($0.0 * xScale, $0.1 * yScale) })
         return coordinates.map { ($0.0 * xScale, $0.1 * yScale) }
     }
     
     func shiftCoordinates(coordinates: [(Double, Double)], lastCoordinate: (Double, Double)) -> [(Double, Double)] {
         let xShift = lastCoordinate.0
         let yShift = lastCoordinate.1
-        print(coordinates.map { ($0.0 - xShift, $0.1 - yShift) })
+        //print(coordinates.map { ($0.0 - xShift, $0.1 - yShift) })
         return coordinates.map { ($0.0 - xShift, $0.1 - yShift) }
     }
     
