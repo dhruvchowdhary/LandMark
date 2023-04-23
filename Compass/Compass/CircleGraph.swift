@@ -65,6 +65,7 @@ struct CircleGraphView: View {
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
                                 .position(x: centerX, y: -5 + centerY - height / 6 * CGFloat(index) / 2 - 15)
+                                .rotationEffect(Angle(degrees: 360 - angleFromNorth))
                                                     
                         } else {
                             Circle()
@@ -103,7 +104,7 @@ struct CircleGraphView: View {
                                 .position(x: x, y: y)
                         }
                     }
-                }.rotationEffect(Angle(degrees: 360 - angleFromNorth))
+                }
 
             }.onAppear{
                 updateLocation()

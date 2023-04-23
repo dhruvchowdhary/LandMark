@@ -269,7 +269,7 @@ struct HomeView: View {
 //            }
             
             
-            if counter % 5 == 0 {
+            if counter % 10 == 0 {
                 recentLocations.append((currLatitude, currLongitude))
                 MyVariables.recentLocations = recentLocations
                 print(MyVariables.recentLocations)
