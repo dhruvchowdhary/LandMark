@@ -10,17 +10,11 @@ import CoreLocation
 import Foundation
 import SwiftUI
 struct CircleGraphView: View {
-    var coordinates = MyVariables.recentLocations
+    let coordinates = MyVariables.recentLocations
     @State private var currentView: String = "circleGraph"
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var angleFromNorth: Double = 0.0
-    
-    @State private var setLocation: CLLocationCoordinate2D?
-    @State private var setLatitude: Double = 0
-    @State private var setLongitude: Double = 0
-    @State private var currLatitude: Double = 0
-    @State private var currLongitude: Double = 0
-    
+
     var body: some View {
         GeometryReader { geometry in
             let padding: CGFloat = 20
@@ -33,49 +27,50 @@ struct CircleGraphView: View {
             
             ZStack {
                 Image("mountain-background1")
-                    .resizable()
-                    .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
-                
+                                    .resizable()
+                                    .scaledToFill()
+                                    .edgesIgnoringSafeArea(.all)
+                               
                 HStack {
-                    Button(action: {
-                        viewRouter.currentScreen = .homeScreen
-                    }, label: {
-                        Text("Compass")
-                            .font(.system(size: 30))
-                            .foregroundColor(Color.black)
-                            .padding()
-                    })
-                    Button(action: {
-                        viewRouter.currentScreen = .circleScreen
-                    }, label: {
-                        Text("Retrace")
-                            .font(.system(size: 30))
-                            .foregroundColor(Color.black)
-                            .underline()
-                            .padding()
-                    })
-                }
-                .offset(y: -280)
+                        Button(action: {
+                            viewRouter.currentScreen = .homeScreen
+                        }, label: {
+                            Text("Compass")
+                                .font(.system(size: 30))
+                                .foregroundColor(Color.black)
+                                .padding()
+                        })
+                        Button(action: {
+                            viewRouter.currentScreen = .circleScreen
+                        }, label: {
+                            Text("Retrace")
+                                .font(.system(size: 30))
+                                .foregroundColor(Color.black)
+                                .underline()
+                                .padding()
+                        })
+                    }
+                        .offset(y: -280)
                 ZStack{
                     // Add concentric circles
                     ForEach(1..<7) { index in
                         if index == 6 {
                             Circle()
                                 .fill(Color.white.opacity(0.3))
-                                .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
+                                .frame(width: width / 6.3 * CGFloat(index), height: height / 6.3 * CGFloat(index))
                                 .position(x: centerX, y: centerY)
                             // Add image on top of largest concentric circle
                             Image("Arrow-1")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
-                                .position(x: centerX, y: -5 + centerY - height / 6 * CGFloat(index) / 2 - 15)
-                            
+                                .position(x: centerX, y: 10 + centerY - height / 6 * CGFloat(index) / 2 - 15)
+                                .rotationEffect(Angle(degrees: 360 - angleFromNorth))
+                                                    
                         } else {
                             Circle()
                                 .stroke(Color(red: 105.0, green: 105.0, blue: 105.0), lineWidth: 1)
-                                .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
+                                .frame(width: width / 6.3 * CGFloat(index), height: height / 6.3 * CGFloat(index))
                                 .position(x: centerX, y: centerY)
                         }
                     }
@@ -109,25 +104,14 @@ struct CircleGraphView: View {
                                 .position(x: x, y: y)
                         }
                     }
-                }.rotationEffect(Angle(degrees: 360 - angleFromNorth))
-//                Button(action: {
-//                    MyVariables.recentLocations = [(currLatitude, currLongitude)]
-//                }, label: {
-//                    Text("Clear")
-//                        .font(.system(size: 30))
-//                        .foregroundColor(Color.black)
-//                })
-//                .padding()
-//                .background(Color(#colorLiteral(red: 0.91, green: 0.91, blue: 0.91, alpha: 1.0)))
-//                .cornerRadius(15)
-//                .offset(y: 280)
-//            }
+                }
+
+            }.onAppear{
+                updateLocation()
+            }
             
-        }.onAppear{
-            updateLocation()
         }
     }
-    
     
     func scaleCoordinates(coordinates: [(Double, Double)], width: Double, height: Double) -> [(Double, Double)] {
         //print(coordinates)
@@ -144,7 +128,7 @@ struct CircleGraphView: View {
         if yRange == 0 {
             yRange = 1
         }
-        
+                
         let xScale = width * 0.25 / xRange
         let yScale = height * 0.25 / yRange
         //print(xScale, yScale)
@@ -160,40 +144,25 @@ struct CircleGraphView: View {
     }
     
     func updateLocation() {
-        let locationManager = CLLocationManager()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        locationManager.startUpdatingHeading()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
-        let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-            //            if CLLocationManager.locationServicesEnabled() {
-            let currLocation = locationManager.location?.coordinate
-            currLatitude = currLocation?.latitude ?? 0.0
-            currLongitude = currLocation?.longitude ?? 0.0
-            
-            // angleFromNorth = self.compassHeading.degrees * -1
-            if let heading = locationManager.heading?.trueHeading {
-                angleFromNorth = heading
-            }
-        }
-        timer.fire()
-    }
-    
-    func getLocation() {
-        let locationManager = CLLocationManager()
-        locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
+            let locationManager = CLLocationManager()
+            locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
+            locationManager.startUpdatingHeading()
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            setLocation = locationManager.location?.coordinate
-            setLatitude = setLocation?.latitude ?? 0.0
-            setLongitude = setLocation?.longitude ?? 0.0
-            UserDefaults.standard.set(setLatitude, forKey: "setLatitude")
-            UserDefaults.standard.set(setLongitude, forKey: "setLongitude")
-            print("Latitude: \(setLatitude), Longitude: \(setLongitude)")
+            
+            let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+    //            if CLLocationManager.locationServicesEnabled() {
+                    let currLocation = locationManager.location?.coordinate
+         //           currLatitude = currLocation?.latitude ?? 0.0
+          //          currLongitude = currLocation?.longitude ?? 0.0
+                    
+               // angleFromNorth = self.compassHeading.degrees * -1
+                if let heading = locationManager.heading?.trueHeading {
+                    angleFromNorth = heading
+                }
+            }
+            timer.fire()
         }
-    }
-    }
+    
 }
 
