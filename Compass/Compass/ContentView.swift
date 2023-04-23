@@ -14,6 +14,8 @@ struct ContentView: View {
     @State private var userHeading: Double = 0.0
     @State private var angleFromNorth: Double = 0.0
     @State private var arrowAngle: Double = 0.0
+    @State private var recentLocations: Array = []
+    @State private var counter: Int = 0
 
     var body: some View {
         VStack {
@@ -70,13 +72,18 @@ struct ContentView: View {
 
                 let bearing = angleBetweenTwoLocations(fromLat: currLatitude, fromLong: currLongitude, toLat: setLatitude, toLong: setLongitude)
                 
-                var theta = bearing - angleFromNorth
+                let theta = bearing - angleFromNorth
                 if theta < 0 {
                     arrowAngle = theta + 360
                 } else {
                     arrowAngle = theta
                 }
 //            }
+            
+            counter += 1
+            if counter % 5 == 0 {
+                recentLocations.append((currLatitude, currLongitude))
+            }
         }
         timer.fire()
     }
@@ -93,7 +100,7 @@ struct ContentView: View {
         let y = sin(dLon) * cos(toLatRad)
         let x = cos(fromLatRad) * sin(toLatRad) - sin(fromLatRad) * cos(toLatRad) * cos(dLon)
 
-        var degBearing = atan2(y, x).radiansToDegrees
+        let degBearing = atan2(y, x).radiansToDegrees
         
         if (degBearing >= 0) {
             return degBearing
