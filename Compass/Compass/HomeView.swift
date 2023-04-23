@@ -10,6 +10,8 @@ import SwiftUI
 struct HomeView: View {
     @State private var tabBarHeight: CGFloat = 0
     @State private var tabBarOffset: CGFloat = UIScreen.main.bounds.height * 0.55 // Initial position
+    @State private var showPtImages = [false, false, false, false, false, false, false]
+    @State private var nextImageToShowIndex = 0
     
     var body: some View {
         ZStack {
@@ -28,14 +30,86 @@ struct HomeView: View {
                         .scaleEffect(0.2)
                         .rotationEffect(Angle(degrees: 1))
                         .offset(x: 0, y: 42.5)
-                    Image("pt1")
-                        .resizable()
-                        .scaledToFit()
-                        .scaleEffect(0.1)
-                        .offset(x: 0, y: -115-17-55/2)
-                        .rotationEffect(Angle(degrees: 80))
-                        .offset(x: 0, y: 17+55/2)
+                    if showPtImages[0] {
+                                            Image("pt0")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .scaleEffect(0.1)
+                                                .offset(x: 0, y: -115-17-55/2)
+                                                .rotationEffect(Angle(degrees: 0))
+                                                .offset(x: 0, y: 17+55/2)
+                                        }
+                    if showPtImages[1] {
+                                            Image("pt1")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .scaleEffect(0.1)
+                                                .offset(x: 0, y: -115-17-55/2)
+                                                .rotationEffect(Angle(degrees: 20))
+                                                .offset(x: 0, y: 17+55/2)
+                                        }
+                    if showPtImages[2] {
+                                            Image("pt2")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .scaleEffect(0.1)
+                                                .offset(x: 0, y: -115-17-55/2)
+                                                .rotationEffect(Angle(degrees: 50))
+                                                .offset(x: 0, y: 17+55/2)
+                                        }
+                    if showPtImages[3] {
+                                            Image("pt3")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .scaleEffect(0.1)
+                                                .offset(x: 0, y: -115-17-55/2)
+                                                .rotationEffect(Angle(degrees: 60))
+                                                .offset(x: 0, y: 17+55/2)
+                                        }
+                    if showPtImages[4] {
+                                            Image("pt4")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .scaleEffect(0.1)
+                                                .offset(x: 0, y: -115-17-55/2)
+                                                .rotationEffect(Angle(degrees: 120))
+                                                .offset(x: 0, y: 17+55/2)
+                                        }
+                    if showPtImages[5] {
+                                            Image("pt5")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .scaleEffect(0.1)
+                                                .offset(x: 0, y: -115-17-55/2)
+                                                .rotationEffect(Angle(degrees: 200))
+                                                .offset(x: 0, y: 17+55/2)
+                                        }
+                    if showPtImages[6] {
+                                            Image("pt6")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .scaleEffect(0.1)
+                                                .offset(x: 0, y: -115-17-55/2)
+                                                .rotationEffect(Angle(degrees: 300))
+                                                .offset(x: 0, y: 17+55/2)
+                                        }
                 }
+                Button(action: {
+                    if nextImageToShowIndex < showPtImages.count {
+                                showPtImages[nextImageToShowIndex] = true
+                                nextImageToShowIndex += 1
+                            } else {
+                                print("Error: index out of bounds")
+                            }
+                                }, label: {
+                                    Text("Set Location")
+                                        .font(.system(size: 30))
+                                        .foregroundColor(Color.black)
+                                })
+                                .padding()
+                                .background(Color(#colorLiteral(red: 0.91, green: 0.91, blue: 0.91, alpha: 1.0)))
+                                .cornerRadius(15)
+                                .offset(y: 250)
             }
             .animation(.easeInOut(duration: 0.2))
             .offset(y: tabBarOffset - UIScreen.main.bounds.height * 0.55) // To adjust the view offset
