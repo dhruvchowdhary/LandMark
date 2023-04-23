@@ -13,7 +13,7 @@ struct ContentView: View {
                 HomeView()
                 
             case Screen.circleScreen:
-                CircleGraphView(angleFromNorth: 0.0, coordinates: [(0, 0), (1, 1), (2, 0), (1, -1)])
+                CircleGraphView(coordinates: [(0, 0), (1, 1), (2, 0), (1, -1)])
             }
         }
         .environmentObject(viewRouter)

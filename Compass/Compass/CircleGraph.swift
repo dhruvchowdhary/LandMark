@@ -6,13 +6,14 @@
 //
 
 //
+import CoreLocation
 import Foundation
 import SwiftUI
 struct CircleGraphView: View {
-    var angleFromNorth: Double 
     let coordinates: [(Double, Double)]
     @State private var currentView: String = "circleGraph"
     @EnvironmentObject var viewRouter: ViewRouter
+    @State private var angleFromNorth: Double = 0.0
 
     var body: some View {
         GeometryReader { geometry in
@@ -21,7 +22,6 @@ struct CircleGraphView: View {
             let height = width
             let centerX = geometry.size.width / 2
             let centerY = geometry.size.height / 2
-            
             let scaledCoordinates = scaleCoordinates(coordinates: coordinates, width: Double(width), height: Double(height))
             let shiftedCoordinates = shiftCoordinates(coordinates: scaledCoordinates, lastCoordinate: scaledCoordinates.last!)
             
@@ -105,7 +105,8 @@ struct CircleGraphView: View {
                     }
                 }.rotationEffect(Angle(degrees: 360 - angleFromNorth))
 
-            }
+            }.onAppear{}
+            
         }
     }
     
@@ -126,4 +127,27 @@ struct CircleGraphView: View {
         let yShift = lastCoordinate.1
         return coordinates.map { ($0.0 - xShift, $0.1 - yShift) }
     }
+    
+    func updateLocation() {
+            let locationManager = CLLocationManager()
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+            locationManager.startUpdatingHeading()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            
+            let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+    //            if CLLocationManager.locationServicesEnabled() {
+                    let currLocation = locationManager.location?.coordinate
+         //           currLatitude = currLocation?.latitude ?? 0.0
+          //          currLongitude = currLocation?.longitude ?? 0.0
+                    
+               // angleFromNorth = self.compassHeading.degrees * -1
+                if let heading = locationManager.heading?.trueHeading {
+                    angleFromNorth = heading
+                }
+            }
+            timer.fire()
+        }
+    
 }
+
