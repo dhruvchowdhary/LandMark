@@ -59,6 +59,13 @@ struct CircleGraphView: View {
                                 .fill(Color.white.opacity(0.3))
                                 .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
                                 .position(x: centerX, y: centerY)
+                            // Add image on top of largest concentric circle
+                            Image("Arrow-1")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40, height: 40)
+                                .position(x: centerX, y: -5 + centerY - height / 6 * CGFloat(index) / 2 - 15)
+                                                    
                         } else {
                             Circle()
                                 .stroke(Color(red: 105.0, green: 105.0, blue: 105.0), lineWidth: 1)
