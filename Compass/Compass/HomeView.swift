@@ -192,7 +192,7 @@ struct HomeView: View {
                 }.onEnded { value in
                     tabBarOffset = value.predictedEndLocation.y > UIScreen.main.bounds.height * 0.7 ? UIScreen.main.bounds.height * 0.53 : UIScreen.main.bounds.height * 0.45 - tabBarHeight
                 })
-            }
+            }.animation(.easeInOut(duration: 0.7))
             .onAppear {
                 tabBarHeight = UIScreen.main.bounds.height * 0.2
             }
