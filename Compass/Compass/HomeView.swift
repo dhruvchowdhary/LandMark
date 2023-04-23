@@ -19,7 +19,19 @@ struct HomeView: View {
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                 Text("Hello, World!")
+                ZStack {
+                    Image("compass")
+                        .resizable()
+                        .scaledToFit()
+                    Image("needle1")
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.2)
+                        .rotationEffect(Angle(degrees: 1))
+                        .offset(x: 0, y: 42.5)
+                }
             }
+            .animation(.easeInOut(duration: 0.2))
             .offset(y: tabBarOffset - UIScreen.main.bounds.height * 0.55) // To adjust the view offset
             
             VStack {
