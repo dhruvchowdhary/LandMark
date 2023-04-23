@@ -57,20 +57,20 @@ struct CircleGraphView: View {
                         if index == 6 {
                             Circle()
                                 .fill(Color.white.opacity(0.3))
-                                .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
+                                .frame(width: width / 6.3 * CGFloat(index), height: height / 6.3 * CGFloat(index))
                                 .position(x: centerX, y: centerY)
                             // Add image on top of largest concentric circle
                             Image("Arrow-1")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
-                                .position(x: centerX, y: -5 + centerY - height / 6 * CGFloat(index) / 2 - 15)
+                                .position(x: centerX, y: 10 + centerY - height / 6 * CGFloat(index) / 2 - 15)
                                 .rotationEffect(Angle(degrees: 360 - angleFromNorth))
                                                     
                         } else {
                             Circle()
                                 .stroke(Color(red: 105.0, green: 105.0, blue: 105.0), lineWidth: 1)
-                                .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
+                                .frame(width: width / 6.3 * CGFloat(index), height: height / 6.3 * CGFloat(index))
                                 .position(x: centerX, y: centerY)
                         }
                     }
