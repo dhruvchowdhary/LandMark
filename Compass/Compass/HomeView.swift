@@ -10,8 +10,10 @@ import SwiftUI
 struct HomeView: View {
     @State private var tabBarHeight: CGFloat = 0
     @State private var tabBarOffset: CGFloat = UIScreen.main.bounds.height * 0.55 // Initial position
-    @State private var showPtImages = UserDefaults.standard.array(forKey: "setLatitude") ?? [false, false, false, false, false, false, false]
-    @State private var nextImageToShowIndex = 0
+    @State private var showPtImages = UserDefaults.standard.array(forKey: "showPtImages") ?? [false, false, false, false, false, false, false]
+    @State private var nextImageToShowIndex = UserDefaults.standard.integer(forKey: "nextImageToShowIndex") ?? 0
+    @State private var inputText = ""
+
     
     var body: some View {
         ZStack {
@@ -97,8 +99,9 @@ struct HomeView: View {
                 Button(action: {
                     if nextImageToShowIndex < showPtImages.count {
                                 showPtImages[nextImageToShowIndex] = true
-                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
                                 nextImageToShowIndex += 1
+                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
+                                UserDefaults.standard.set(nextImageToShowIndex, forKey: "nextImageToShowIndex")
                             } else {
                                 print("Error: index out of bounds")
                             }
@@ -110,7 +113,7 @@ struct HomeView: View {
                                 .padding()
                                 .background(Color(#colorLiteral(red: 0.91, green: 0.91, blue: 0.91, alpha: 1.0)))
                                 .cornerRadius(15)
-                                .offset(y: 260)
+                                .offset(y: 280)
             }
             .animation(.easeInOut(duration: 0.2))
             .offset(y: tabBarOffset - UIScreen.main.bounds.height * 0.55) // To adjust the view offset
@@ -123,9 +126,28 @@ struct HomeView: View {
                         .foregroundColor(.gray)
                         .padding(.top, 5)
                         .padding(.bottom, 10)
-                    Text("Tab Bar Content")
+                    Text("Saved Locations")
                         .font(.title)
                         .padding()
+                    HStack {
+                        Image("pt0")
+                            .resizable()
+                            .scaledToFit()
+                            .scaleEffect(1.5)
+                        TextField("Enter text here", text: $inputText)
+                                .frame(width: 200)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(15)
+                                .shadow(radius: 5)
+                                .padding(.horizontal, 15)
+                        Image("trash")
+                            .resizable()
+                            .scaledToFit()
+                            .scaleEffect(1.2)
+                    }
+                    .padding()
+                        
                     Spacer()
                 }
                 .frame(width: UIScreen.main.bounds.width, height: tabBarHeight, alignment: .center)
@@ -142,14 +164,5 @@ struct HomeView: View {
                 tabBarHeight = UIScreen.main.bounds.height * 0.2
             }
         }
-    }
-}
-
-
-
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
     }
 }
