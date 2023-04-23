@@ -16,7 +16,13 @@ struct HomeView: View {
     // UserDefaults.standard.array(forKey: "showPtImages") ??
     @State private var nextImageToShowIndex = 0
     // UserDefaults.standard.integer(forKey: "nextImageToShowIndex") ??
-    @State private var inputText = ""
+    @State private var inputText0 = ""
+    @State private var inputText1 = ""
+    @State private var inputText2 = ""
+    @State private var inputText3 = ""
+    @State private var inputText4 = ""
+    @State private var inputText5 = ""
+    @State private var inputText6 = ""
     
     @ObservedObject var compassHeading = CompassHeading()
 
@@ -39,78 +45,72 @@ struct HomeView: View {
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
+                Image("Arrow")
+                    .resizable()
+                    .scaledToFit()
+                    .scaleEffect(0.13)
+                    .offset(y: -210)
                 ZStack {
-                    Image("compass")
+                    Image("compass2")
                         .resizable()
                         .scaledToFit()
-                    Image("needle1")
-                        .resizable()
-                        .scaledToFit()
-                        .scaleEffect(0.2)
-                        .rotationEffect(Angle(degrees: 1+angleFromNorth))
-                        .offset(x: 0, y: 42.5)
-                    if showPtImages[0] as! Bool {
+                        .scaleEffect(0.7)
+                        .rotationEffect(Angle(degrees: angleFromNorth))
+                    if showPtImages[0] {
                                             Image("pt0")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
-                                                .offset(x: 0, y: -115-17-55/2)
-                                                .rotationEffect(Angle(degrees: arrowAngle))
-                                                .offset(x: 0, y: 17+55/2)
+                                                .offset(x: 0, y: -165)
+                                                .rotationEffect(Angle(degrees: 0))
                                         }
-                    if showPtImages[1] as! Bool {
+                    if showPtImages[1] {
                                             Image("pt1")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
-                                                .offset(x: 0, y: -115-17-55/2)
-                                                .rotationEffect(Angle(degrees: 20))
-                                                .offset(x: 0, y: 17+55/2)
+                                                .offset(x: 0, y: -165)
+                                                .rotationEffect(Angle(degrees: 40))
                                         }
-                    if showPtImages[2] as! Bool {
+                    if showPtImages[2] {
                                             Image("pt2")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
-                                                .offset(x: 0, y: -115-17-55/2)
-                                                .rotationEffect(Angle(degrees: 50))
-                                                .offset(x: 0, y: 17+55/2)
+                                                .offset(x: 0, y: -165)
+                                                .rotationEffect(Angle(degrees: 60))
                                         }
-                    if showPtImages[3] as! Bool {
+                    if showPtImages[3] {
                                             Image("pt3")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
-                                                .offset(x: 0, y: -115-17-55/2)
-                                                .rotationEffect(Angle(degrees: 60))
-                                                .offset(x: 0, y: 17+55/2)
+                                                .offset(x: 0, y: -165)
+                                                .rotationEffect(Angle(degrees: 80))
                                         }
-                    if showPtImages[4] as! Bool {
+                    if showPtImages[4] {
                                             Image("pt4")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
-                                                .offset(x: 0, y: -115-17-55/2)
+                                                .offset(x: 0, y: -165)
                                                 .rotationEffect(Angle(degrees: 120))
-                                                .offset(x: 0, y: 17+55/2)
                                         }
-                    if showPtImages[5] as! Bool {
+                    if showPtImages[5] {
                                             Image("pt5")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
-                                                .offset(x: 0, y: -115-17-55/2)
+                                                .offset(x: 0, y: -165)
                                                 .rotationEffect(Angle(degrees: 200))
-                                                .offset(x: 0, y: 17+55/2)
                                         }
-                    if showPtImages[6] as! Bool {
+                    if showPtImages[6] {
                                             Image("pt6")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .scaleEffect(0.1)
-                                                .offset(x: 0, y: -115-17-55/2)
+                                                .offset(x: 0, y: -165)
                                                 .rotationEffect(Angle(degrees: 300))
-                                                .offset(x: 0, y: 17+55/2)
                                         }
                 }
                 Button(action: {
@@ -150,25 +150,114 @@ struct HomeView: View {
                     Text("Saved Locations")
                         .font(.title)
                         .padding()
-                    HStack {
-                        Image("pt0")
-                            .resizable()
-                            .scaledToFit()
-                            .scaleEffect(1.5)
-                        TextField("Enter text here", text: $inputText)
-                                .frame(width: 200)
-                                .padding()
-                                .background(Color.white)
-                                .cornerRadius(15)
-                                .shadow(radius: 5)
-                                .padding(.horizontal, 15)
-                        Image("trash")
-                            .resizable()
-                            .scaledToFit()
-                            .scaleEffect(1.2)
+                    if showPtImages[0] {
+                        HStack {
+                            Image("pt0")
+                                .resizable()
+                                .scaledToFit()
+                                .scaleEffect(1.5)
+                            TextField("Enter text here", text: $inputText0)
+                                    .frame(width: 200)
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(15)
+                                    .shadow(radius: 5)
+                                    .padding(.horizontal, 15)
+                            Button(action: {
+                                nextImageToShowIndex = 0
+                                showPtImages[nextImageToShowIndex] = false
+                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
+                                UserDefaults.standard.set(nextImageToShowIndex, forKey: "nextImageToShowIndex")
+                            }) {
+                            Image("trash")
+                                .resizable()
+                                .scaledToFit()
+                                .scaleEffect(1.2)
+                            }
+                        }
+                        .padding()
                     }
-                    .padding()
-                        
+                    if showPtImages[1] {
+                        HStack {
+                            Image("pt2")
+                                .resizable()
+                                .scaledToFit()
+                                .scaleEffect(1.5)
+                            TextField("Enter text here", text: $inputText2)
+                                    .frame(width: 200)
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(15)
+                                    .shadow(radius: 5)
+                                    .padding(.horizontal, 15)
+                            Button(action: {
+                                nextImageToShowIndex = 2
+                                showPtImages[nextImageToShowIndex] = false
+                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
+                                UserDefaults.standard.set(nextImageToShowIndex, forKey: "nextImageToShowIndex")
+                            }) {
+                            Image("trash")
+                                .resizable()
+                                .scaledToFit()
+                                .scaleEffect(1.2)
+                            }
+                        }
+                        .padding()
+                    }
+                    if showPtImages[2] {
+                        HStack {
+                            Image("pt2")
+                                .resizable()
+                                .scaledToFit()
+                                .scaleEffect(1.5)
+                            TextField("Enter text here", text: $inputText2)
+                                    .frame(width: 200)
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(15)
+                                    .shadow(radius: 5)
+                                    .padding(.horizontal, 15)
+                            Button(action: {
+                                nextImageToShowIndex = 2
+                                showPtImages[nextImageToShowIndex] = false
+                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
+                                UserDefaults.standard.set(nextImageToShowIndex, forKey: "nextImageToShowIndex")
+                            }) {
+                            Image("trash")
+                                .resizable()
+                                .scaledToFit()
+                                .scaleEffect(1.2)
+                            }
+                        }
+                        .padding()
+                    }
+                    if showPtImages[3] {
+                        HStack {
+                            Image("pt3")
+                                .resizable()
+                                .scaledToFit()
+                                .scaleEffect(1.5)
+                            TextField("Enter text here", text: $inputText3)
+                                    .frame(width: 200)
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(15)
+                                    .shadow(radius: 5)
+                                    .padding(.horizontal, 15)
+                            Button(action: {
+                                nextImageToShowIndex = 3
+                                showPtImages[nextImageToShowIndex] = false
+                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
+                                UserDefaults.standard.set(nextImageToShowIndex, forKey: "nextImageToShowIndex")
+                            }) {
+                            Image("trash")
+                                .resizable()
+                                .scaledToFit()
+                                .scaleEffect(1.2)
+                            }
+                        }
+                        .padding()
+                    }
                     Spacer()
                 }
                 .frame(width: UIScreen.main.bounds.width, height: tabBarHeight, alignment: .center)

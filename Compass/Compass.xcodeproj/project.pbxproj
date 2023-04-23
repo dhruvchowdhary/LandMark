@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0281762429F4860C009EC1E9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0281762329F4860C009EC1E9 /* HomeView.swift */; };
+		0281762629F4F304009EC1E9 /* PTImageInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0281762529F4F304009EC1E9 /* PTImageInput.swift */; };
 		775C2F6E29F3C3AB00D4A00D /* CompassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F6D29F3C3AB00D4A00D /* CompassApp.swift */; };
 		775C2F7029F3C3AB00D4A00D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C2F6F29F3C3AB00D4A00D /* ContentView.swift */; };
 		775C2F7229F3C3AC00D4A00D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 775C2F7129F3C3AC00D4A00D /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		0281762329F4860C009EC1E9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0281762529F4F304009EC1E9 /* PTImageInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTImageInput.swift; sourceTree = "<group>"; };
 		02ADD66729F3D34300B8C1F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		775C2F6A29F3C3AB00D4A00D /* Compass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Compass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		775C2F6D29F3C3AB00D4A00D /* CompassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassApp.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				775C2F9829F3CA1800D4A00D /* LargeButton.swift */,
+				0281762529F4F304009EC1E9 /* PTImageInput.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0281762629F4F304009EC1E9 /* PTImageInput.swift in Sources */,
 				775C2F7029F3C3AB00D4A00D /* ContentView.swift in Sources */,
 				0281762429F4860C009EC1E9 /* HomeView.swift in Sources */,
 				775C2F6E29F3C3AB00D4A00D /* CompassApp.swift in Sources */,
