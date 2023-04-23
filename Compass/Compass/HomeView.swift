@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State private var tabBarHeight: CGFloat = 0
     @State private var tabBarOffset: CGFloat = UIScreen.main.bounds.height * 0.55 // Initial position
-    @State private var showPtImages = [false, false, false, false, false, false, false]
+    @State private var showPtImages = UserDefaults.standard.array(forKey: "setLatitude") ?? [false, false, false, false, false, false, false]
     @State private var nextImageToShowIndex = 0
     
     var body: some View {
@@ -30,7 +30,7 @@ struct HomeView: View {
                         .scaleEffect(0.2)
                         .rotationEffect(Angle(degrees: 1))
                         .offset(x: 0, y: 42.5)
-                    if showPtImages[0] {
+                    if showPtImages[0] as! Bool {
                                             Image("pt0")
                                                 .resizable()
                                                 .scaledToFit()
@@ -39,7 +39,7 @@ struct HomeView: View {
                                                 .rotationEffect(Angle(degrees: 0))
                                                 .offset(x: 0, y: 17+55/2)
                                         }
-                    if showPtImages[1] {
+                    if showPtImages[1] as! Bool {
                                             Image("pt1")
                                                 .resizable()
                                                 .scaledToFit()
@@ -48,7 +48,7 @@ struct HomeView: View {
                                                 .rotationEffect(Angle(degrees: 20))
                                                 .offset(x: 0, y: 17+55/2)
                                         }
-                    if showPtImages[2] {
+                    if showPtImages[2] as! Bool {
                                             Image("pt2")
                                                 .resizable()
                                                 .scaledToFit()
@@ -57,7 +57,7 @@ struct HomeView: View {
                                                 .rotationEffect(Angle(degrees: 50))
                                                 .offset(x: 0, y: 17+55/2)
                                         }
-                    if showPtImages[3] {
+                    if showPtImages[3] as! Bool {
                                             Image("pt3")
                                                 .resizable()
                                                 .scaledToFit()
@@ -66,7 +66,7 @@ struct HomeView: View {
                                                 .rotationEffect(Angle(degrees: 60))
                                                 .offset(x: 0, y: 17+55/2)
                                         }
-                    if showPtImages[4] {
+                    if showPtImages[4] as! Bool {
                                             Image("pt4")
                                                 .resizable()
                                                 .scaledToFit()
@@ -75,7 +75,7 @@ struct HomeView: View {
                                                 .rotationEffect(Angle(degrees: 120))
                                                 .offset(x: 0, y: 17+55/2)
                                         }
-                    if showPtImages[5] {
+                    if showPtImages[5] as! Bool {
                                             Image("pt5")
                                                 .resizable()
                                                 .scaledToFit()
@@ -84,7 +84,7 @@ struct HomeView: View {
                                                 .rotationEffect(Angle(degrees: 200))
                                                 .offset(x: 0, y: 17+55/2)
                                         }
-                    if showPtImages[6] {
+                    if showPtImages[6] as! Bool {
                                             Image("pt6")
                                                 .resizable()
                                                 .scaledToFit()
@@ -97,6 +97,7 @@ struct HomeView: View {
                 Button(action: {
                     if nextImageToShowIndex < showPtImages.count {
                                 showPtImages[nextImageToShowIndex] = true
+                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
                                 nextImageToShowIndex += 1
                             } else {
                                 print("Error: index out of bounds")
@@ -109,7 +110,7 @@ struct HomeView: View {
                                 .padding()
                                 .background(Color(#colorLiteral(red: 0.91, green: 0.91, blue: 0.91, alpha: 1.0)))
                                 .cornerRadius(15)
-                                .offset(y: 250)
+                                .offset(y: 260)
             }
             .animation(.easeInOut(duration: 0.2))
             .offset(y: tabBarOffset - UIScreen.main.bounds.height * 0.55) // To adjust the view offset
