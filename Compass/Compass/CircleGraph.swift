@@ -105,7 +105,9 @@ struct CircleGraphView: View {
                     }
                 }.rotationEffect(Angle(degrees: 360 - angleFromNorth))
 
-            }.onAppear{}
+            }.onAppear{
+                updateLocation()
+            }
             
         }
     }
