@@ -10,10 +10,16 @@ import CoreLocation
 import Foundation
 import SwiftUI
 struct CircleGraphView: View {
-    let coordinates = MyVariables.recentLocations
+    var coordinates = MyVariables.recentLocations
     @State private var currentView: String = "circleGraph"
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var angleFromNorth: Double = 0.0
+    
+    @State private var setLocation: CLLocationCoordinate2D?
+    @State private var setLatitude: Double = 0
+    @State private var setLongitude: Double = 0
+    @State private var currLatitude: Double = 0
+    @State private var currLongitude: Double = 0
 
     var body: some View {
         GeometryReader { geometry in
@@ -104,8 +110,18 @@ struct CircleGraphView: View {
                         }
                     }
                 }.rotationEffect(Angle(degrees: 360 - angleFromNorth))
-
-            }.onAppear{}
+                Button(action: {
+                    MyVariables.recentLocations = [(currLatitude, currLongitude)]
+                                }, label: {
+                                    Text("Clear")
+                                        .font(.system(size: 30))
+                                        .foregroundColor(Color.black)
+                                })
+                                .padding()
+                                .background(Color(#colorLiteral(red: 0.91, green: 0.91, blue: 0.91, alpha: 1.0)))
+                                .cornerRadius(15)
+                                .offset(y: 280)
+            }
             
         }
     }
@@ -150,8 +166,8 @@ struct CircleGraphView: View {
             let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
     //            if CLLocationManager.locationServicesEnabled() {
                     let currLocation = locationManager.location?.coordinate
-         //           currLatitude = currLocation?.latitude ?? 0.0
-          //          currLongitude = currLocation?.longitude ?? 0.0
+                    currLatitude = currLocation?.latitude ?? 0.0
+                    currLongitude = currLocation?.longitude ?? 0.0
                     
                // angleFromNorth = self.compassHeading.degrees * -1
                 if let heading = locationManager.heading?.trueHeading {
@@ -160,6 +176,21 @@ struct CircleGraphView: View {
             }
             timer.fire()
         }
+    
+    func getLocation() {
+        let locationManager = CLLocationManager()
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            setLocation = locationManager.location?.coordinate
+            setLatitude = setLocation?.latitude ?? 0.0
+            setLongitude = setLocation?.longitude ?? 0.0
+            UserDefaults.standard.set(setLatitude, forKey: "setLatitude")
+            UserDefaults.standard.set(setLongitude, forKey: "setLongitude")
+            print("Latitude: \(setLatitude), Longitude: \(setLongitude)")
+        }
+    }
     
 }
 

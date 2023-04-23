@@ -236,9 +236,6 @@ struct HomeView: View {
             setLongitude = setLocation?.longitude ?? 0.0
             UserDefaults.standard.set(setLatitude, forKey: "setLatitude")
             UserDefaults.standard.set(setLongitude, forKey: "setLongitude")
-//            currLocation = locationManager.location?.coordinate
-//            currLatitude = Double(UserDefaults.standard.float(forKey: "setLatitude"))
-//            currLongitude = Double(UserDefaults.standard.float(forKey: "setLongitude"))
             print("Latitude: \(setLatitude), Longitude: \(setLongitude)")
         }
     }
