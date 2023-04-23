@@ -1,5 +1,5 @@
 //
-//  CircleGraph.swift
+//  CircleGraphView.swift
 //  Compass
 //
 //  Created by Shivan Patel on 4/22/23.
@@ -8,8 +8,7 @@
 //
 import Foundation
 import SwiftUI
-
-struct CircleGraph: View {
+struct CircleGraphView: View {
     let coordinates: [(Double, Double)]
 
     var body: some View {
@@ -19,30 +18,23 @@ struct CircleGraph: View {
             let height = width
             let centerX = geometry.size.width / 2
             let centerY = geometry.size.height / 2
-            let lastCoordinate = coordinates.last ?? (0, 0)
-            let xFactor = CGFloat(lastCoordinate.0) / 10
-            let yFactor = CGFloat(lastCoordinate.1) / 10
-            let xOffset = centerX - width / 2 * xFactor
-            let yOffset = centerY - height / 2 * yFactor
+            
+            let scaledCoordinates = scaleCoordinates(coordinates: coordinates, width: Double(width), height: Double(height))
+            let shiftedCoordinates = shiftCoordinates(coordinates: scaledCoordinates, lastCoordinate: scaledCoordinates.last!)
             
             ZStack {
-                VStack {
-                    ForEach(0..<11) { row in
-                        HStack {
-                            ForEach(0..<11) { column in
-                                Circle()
-                                    .fill(Color.white)
-                                    .frame(width: width / 11, height: height / 11)
-                            }
-                        }
-                    }
+                // Add concentric circles
+                ForEach(1..<6) { index in
+                    Circle()
+                        .stroke(Color.gray, lineWidth: 1)
+                        .frame(width: width / 6 * CGFloat(index), height: height / 6 * CGFloat(index))
+                        .position(x: centerX, y: centerY)
                 }
-                .offset(x: centerX - width / 2, y: centerY - height / 2)
                 
                 Path { path in
-                    for (index, coordinate) in coordinates.enumerated() {
-                        let x = CGFloat(coordinate.0) * width / 10 + xOffset
-                        let y = -CGFloat(coordinate.1) * height / 10 + yOffset
+                    for (index, coordinate) in shiftedCoordinates.enumerated() {
+                        let x = CGFloat(coordinate.0) + centerX
+                        let y = -CGFloat(coordinate.1) + centerY
                         if index == 0 {
                             path.move(to: CGPoint(x: x, y: y))
                         } else {
@@ -52,11 +44,11 @@ struct CircleGraph: View {
                 }
                 .stroke(Color.blue, lineWidth: 2)
                 
-                ForEach(0..<coordinates.count) { index in
-                    let coordinate = coordinates[index]
-                    let x = CGFloat(coordinate.0) * width / 10 + xOffset
-                    let y = -CGFloat(coordinate.1) * height / 10 + yOffset
-                    if index == coordinates.count - 1 {
+                ForEach(0..<shiftedCoordinates.count) { index in
+                    let coordinate = shiftedCoordinates[index]
+                    let x = CGFloat(coordinate.0) + centerX
+                    let y = -CGFloat(coordinate.1) + centerY
+                    if index == shiftedCoordinates.count - 1 {
                         Circle()
                             .fill(Color.green)
                             .frame(width: 10, height: 10)
@@ -70,5 +62,23 @@ struct CircleGraph: View {
                 }
             }
         }
+    }
+    
+    func scaleCoordinates(coordinates: [(Double, Double)], width: Double, height: Double) -> [(Double, Double)] {
+        let xMax = coordinates.map { $0.0 }.max()!
+        let yMax = coordinates.map { $0.1 }.max()!
+        let xMin = coordinates.map { $0.0 }.min()!
+        let yMin = coordinates.map { $0.1 }.min()!
+        let xRange = xMax - xMin
+        let yRange = yMax - yMin
+        let xScale = width * 0.25 / xRange
+        let yScale = height * 0.25 / yRange
+        return coordinates.map { ($0.0 * xScale, $0.1 * yScale) }
+    }
+    
+    func shiftCoordinates(coordinates: [(Double, Double)], lastCoordinate: (Double, Double)) -> [(Double, Double)] {
+        let xShift = lastCoordinate.0
+        let yShift = lastCoordinate.1
+        return coordinates.map { ($0.0 - xShift, $0.1 - yShift) }
     }
 }
