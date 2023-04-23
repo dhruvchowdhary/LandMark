@@ -11,9 +11,9 @@ import CoreMotion
 
 struct HomeView: View {
     @State private var tabBarHeight: CGFloat = 0
-    @State private var tabBarOffset: CGFloat = UIScreen.main.bounds.height * 0.55 // Initial position
-    @State private var showPtImages = [false, false, false, false, false, false, false]
-    // UserDefaults.standard.array(forKey: "showPtImages") ??
+    @State private var tabBarOffset: CGFloat = UIScreen.main.bounds.height * 0.53 // Initial position
+    @State private var showPtImages: [Bool] = [false, false, false, false, false, false, false]
+    // UserDefaults.standard.array(forKey: "showPtImages") as? [Bool] ??
     @State private var nextImageToShowIndex = 0
     // UserDefaults.standard.integer(forKey: "nextImageToShowIndex") ??
     @State private var inputText0 = ""
@@ -115,10 +115,13 @@ struct HomeView: View {
                 }
                 Button(action: {
                     if nextImageToShowIndex < showPtImages.count {
+                        
                                 showPtImages[nextImageToShowIndex] = true
                                 nextImageToShowIndex += 1
                                 UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
                                 UserDefaults.standard.set(nextImageToShowIndex, forKey: "nextImageToShowIndex")
+                        tabBarHeight+=80
+                        print(tabBarHeight-UIScreen.main.bounds.height * 0.2)
                         getLocation()
                             } else {
                                 print("Error: index out of bounds")
@@ -134,7 +137,7 @@ struct HomeView: View {
                                 .offset(y: 280)
             }
             .animation(.easeInOut(duration: 0.2))
-            .offset(y: tabBarOffset - UIScreen.main.bounds.height * 0.55) // To adjust the view offset
+            .offset(y: tabBarOffset - UIScreen.main.bounds.height * 0.53 - 0.5*(tabBarHeight-UIScreen.main.bounds.height * 0.2)) // To adjust the view offset
             .onAppear {
                 updateLocation()
             }
@@ -151,112 +154,25 @@ struct HomeView: View {
                         .font(.title)
                         .padding()
                     if showPtImages[0] {
-                        HStack {
-                            Image("pt0")
-                                .resizable()
-                                .scaledToFit()
-                                .scaleEffect(1.5)
-                            TextField("Enter text here", text: $inputText0)
-                                    .frame(width: 200)
-                                    .padding()
-                                    .background(Color.white)
-                                    .cornerRadius(15)
-                                    .shadow(radius: 5)
-                                    .padding(.horizontal, 15)
-                            Button(action: {
-                                nextImageToShowIndex = 0
-                                showPtImages[nextImageToShowIndex] = false
-                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
-                                UserDefaults.standard.set(nextImageToShowIndex, forKey: "nextImageToShowIndex")
-                            }) {
-                            Image("trash")
-                                .resizable()
-                                .scaledToFit()
-                                .scaleEffect(1.2)
-                            }
-                        }
-                        .padding()
+                        PTImageInput(inputText: $inputText0, showPtImages: $showPtImages, nextImageToShowIndex: $nextImageToShowIndex, tabBarHeight: $tabBarHeight, index: 0)
                     }
                     if showPtImages[1] {
-                        HStack {
-                            Image("pt2")
-                                .resizable()
-                                .scaledToFit()
-                                .scaleEffect(1.5)
-                            TextField("Enter text here", text: $inputText2)
-                                    .frame(width: 200)
-                                    .padding()
-                                    .background(Color.white)
-                                    .cornerRadius(15)
-                                    .shadow(radius: 5)
-                                    .padding(.horizontal, 15)
-                            Button(action: {
-                                nextImageToShowIndex = 2
-                                showPtImages[nextImageToShowIndex] = false
-                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
-                                UserDefaults.standard.set(nextImageToShowIndex, forKey: "nextImageToShowIndex")
-                            }) {
-                            Image("trash")
-                                .resizable()
-                                .scaledToFit()
-                                .scaleEffect(1.2)
-                            }
-                        }
-                        .padding()
+                        PTImageInput(inputText: $inputText0, showPtImages: $showPtImages, nextImageToShowIndex: $nextImageToShowIndex, tabBarHeight: $tabBarHeight, index: 1)
                     }
                     if showPtImages[2] {
-                        HStack {
-                            Image("pt2")
-                                .resizable()
-                                .scaledToFit()
-                                .scaleEffect(1.5)
-                            TextField("Enter text here", text: $inputText2)
-                                    .frame(width: 200)
-                                    .padding()
-                                    .background(Color.white)
-                                    .cornerRadius(15)
-                                    .shadow(radius: 5)
-                                    .padding(.horizontal, 15)
-                            Button(action: {
-                                nextImageToShowIndex = 2
-                                showPtImages[nextImageToShowIndex] = false
-                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
-                                UserDefaults.standard.set(nextImageToShowIndex, forKey: "nextImageToShowIndex")
-                            }) {
-                            Image("trash")
-                                .resizable()
-                                .scaledToFit()
-                                .scaleEffect(1.2)
-                            }
-                        }
-                        .padding()
+                        PTImageInput(inputText: $inputText0, showPtImages: $showPtImages, nextImageToShowIndex: $nextImageToShowIndex, tabBarHeight: $tabBarHeight, index: 2)
                     }
                     if showPtImages[3] {
-                        HStack {
-                            Image("pt3")
-                                .resizable()
-                                .scaledToFit()
-                                .scaleEffect(1.5)
-                            TextField("Enter text here", text: $inputText3)
-                                    .frame(width: 200)
-                                    .padding()
-                                    .background(Color.white)
-                                    .cornerRadius(15)
-                                    .shadow(radius: 5)
-                                    .padding(.horizontal, 15)
-                            Button(action: {
-                                nextImageToShowIndex = 3
-                                showPtImages[nextImageToShowIndex] = false
-                                UserDefaults.standard.set(showPtImages, forKey: "showPtImages")
-                                UserDefaults.standard.set(nextImageToShowIndex, forKey: "nextImageToShowIndex")
-                            }) {
-                            Image("trash")
-                                .resizable()
-                                .scaledToFit()
-                                .scaleEffect(1.2)
-                            }
-                        }
-                        .padding()
+                        PTImageInput(inputText: $inputText0, showPtImages: $showPtImages, nextImageToShowIndex: $nextImageToShowIndex, tabBarHeight: $tabBarHeight, index: 3)
+                    }
+                    if showPtImages[4] {
+                        PTImageInput(inputText: $inputText0, showPtImages: $showPtImages, nextImageToShowIndex: $nextImageToShowIndex, tabBarHeight: $tabBarHeight, index: 4)
+                    }
+                    if showPtImages[5] {
+                        PTImageInput(inputText: $inputText0, showPtImages: $showPtImages, nextImageToShowIndex: $nextImageToShowIndex, tabBarHeight: $tabBarHeight, index: 5)
+                    }
+                    if showPtImages[6] {
+                        PTImageInput(inputText: $inputText0, showPtImages: $showPtImages, nextImageToShowIndex: $nextImageToShowIndex, tabBarHeight: $tabBarHeight, index: 6)
                     }
                     Spacer()
                 }
@@ -267,7 +183,7 @@ struct HomeView: View {
                 .gesture(DragGesture().onChanged { value in
                     tabBarOffset = max(value.startLocation.y + value.translation.height, UIScreen.main.bounds.height * 0.45 - tabBarHeight)
                 }.onEnded { value in
-                    tabBarOffset = value.predictedEndLocation.y > UIScreen.main.bounds.height * 0.7 ? UIScreen.main.bounds.height * 0.55 : UIScreen.main.bounds.height * 0.45 - tabBarHeight
+                    tabBarOffset = value.predictedEndLocation.y > UIScreen.main.bounds.height * 0.7 ? UIScreen.main.bounds.height * 0.53 : UIScreen.main.bounds.height * 0.45 - tabBarHeight
                 })
             }
             .onAppear {
