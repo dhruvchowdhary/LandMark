@@ -10,6 +10,9 @@ import CoreLocation
 import CoreMotion
 
 struct HomeView: View {
+    @State private var currentView: String = "home"
+    @EnvironmentObject var viewRouter: ViewRouter
+    
     @State private var tabBarHeight: CGFloat = 0
     @State private var tabBarOffset: CGFloat = UIScreen.main.bounds.height * 0.53 // Initial position
     @State private var showPtImages: [Bool] = [false, false, false, false, false, false, false]
@@ -45,6 +48,27 @@ struct HomeView: View {
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
+                    .offset(y: -16)
+                HStack {
+                        Button(action: {
+                            viewRouter.currentScreen = .homeScreen
+                        }, label: {
+                            Text("Compass")
+                                .font(.system(size: 30))
+                                .foregroundColor(Color.black)
+                                .underline()
+                                .padding()
+                        })
+                        Button(action: {
+                            viewRouter.currentScreen = .circleScreen
+                        }, label: {
+                            Text("Retrace")
+                                .font(.system(size: 30))
+                                .foregroundColor(Color.black)
+                                .padding()
+                        })
+                    }
+                        .offset(y: -280)
                 Image("Arrow")
                     .resizable()
                     .scaledToFit()
@@ -197,7 +221,9 @@ struct HomeView: View {
                 tabBarHeight = UIScreen.main.bounds.height * 0.2
             }
         }
+        
     }
+        
     
     func getLocation() {
         let locationManager = CLLocationManager()

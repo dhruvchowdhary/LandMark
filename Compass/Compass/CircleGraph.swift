@@ -11,6 +11,8 @@ import SwiftUI
 struct CircleGraphView: View {
     var angleFromNorth: Double 
     let coordinates: [(Double, Double)]
+    @State private var currentView: String = "circleGraph"
+    @EnvironmentObject var viewRouter: ViewRouter
 
     var body: some View {
         GeometryReader { geometry in
@@ -28,7 +30,27 @@ struct CircleGraphView: View {
                                     .resizable()
                                     .scaledToFill()
                                     .edgesIgnoringSafeArea(.all)
-                                    .offset(y: -16)
+                               
+                HStack {
+                        Button(action: {
+                            viewRouter.currentScreen = .homeScreen
+                        }, label: {
+                            Text("Compass")
+                                .font(.system(size: 30))
+                                .foregroundColor(Color.black)
+                                .padding()
+                        })
+                        Button(action: {
+                            viewRouter.currentScreen = .circleScreen
+                        }, label: {
+                            Text("Retrace")
+                                .font(.system(size: 30))
+                                .foregroundColor(Color.black)
+                                .underline()
+                                .padding()
+                        })
+                    }
+                        .offset(y: -280)
                 ZStack{
                     // Add concentric circles
                     ForEach(1..<7) { index in
