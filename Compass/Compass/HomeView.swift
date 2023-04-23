@@ -37,7 +37,7 @@ struct HomeView: View {
     @State private var userHeading: Double = 0.0
     @State private var angleFromNorth: Double = 0.0
     @State private var arrowAngle: Double = 0.0
-    @State private var recentLocations: Array = []
+    @State private var recentLocations: [(Double, Double)] = []
     @State private var counter: Int = 0
 
     
@@ -268,10 +268,13 @@ struct HomeView: View {
                 }
 //            }
             
-            counter += 1
+            
             if counter % 5 == 0 {
                 recentLocations.append((currLatitude, currLongitude))
+                MyVariables.recentLocations = recentLocations
+                print(MyVariables.recentLocations)
             }
+            counter += 1
         }
         timer.fire()
     }
@@ -303,3 +306,6 @@ private extension Double {
     var radiansToDegrees: Double { return self * (180 / .pi) }
 }
 
+struct MyVariables {
+    static var recentLocations: [(Double, Double)] = []
+}

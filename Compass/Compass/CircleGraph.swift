@@ -10,7 +10,7 @@ import CoreLocation
 import Foundation
 import SwiftUI
 struct CircleGraphView: View {
-    let coordinates: [(Double, Double)]
+    let coordinates = MyVariables.recentLocations
     @State private var currentView: String = "circleGraph"
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var angleFromNorth: Double = 0.0
@@ -111,20 +111,32 @@ struct CircleGraphView: View {
     }
     
     func scaleCoordinates(coordinates: [(Double, Double)], width: Double, height: Double) -> [(Double, Double)] {
+        print(coordinates)
         let xMax = coordinates.map { $0.0 }.max()!
         let yMax = coordinates.map { $0.1 }.max()!
         let xMin = coordinates.map { $0.0 }.min()!
         let yMin = coordinates.map { $0.1 }.min()!
-        let xRange = xMax - xMin
-        let yRange = yMax - yMin
+        //print(xMax, yMax, xMin, yMin)
+        var xRange = xMax - xMin
+        var yRange = yMax - yMin
+        if xRange == 0{
+            xRange = 1
+        }
+        if yRange == 0 {
+            yRange = 1
+        }
+                
         let xScale = width * 0.25 / xRange
         let yScale = height * 0.25 / yRange
+        print(xScale, yScale)
+        print(coordinates.map { ($0.0 * xScale, $0.1 * yScale) })
         return coordinates.map { ($0.0 * xScale, $0.1 * yScale) }
     }
     
     func shiftCoordinates(coordinates: [(Double, Double)], lastCoordinate: (Double, Double)) -> [(Double, Double)] {
         let xShift = lastCoordinate.0
         let yShift = lastCoordinate.1
+        print(coordinates.map { ($0.0 - xShift, $0.1 - yShift) })
         return coordinates.map { ($0.0 - xShift, $0.1 - yShift) }
     }
     
