@@ -18,7 +18,6 @@ struct HomeView: View {
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
-                Text("Hello, World!")
                 ZStack {
                     Image("compass")
                         .resizable()
@@ -29,6 +28,13 @@ struct HomeView: View {
                         .scaleEffect(0.2)
                         .rotationEffect(Angle(degrees: 1))
                         .offset(x: 0, y: 42.5)
+                    Image("pt1")
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.1)
+                        .offset(x: 0, y: -115-17-55/2)
+                        .rotationEffect(Angle(degrees: 80))
+                        .offset(x: 0, y: 17+55/2)
                 }
             }
             .animation(.easeInOut(duration: 0.2))
