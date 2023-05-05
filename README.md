@@ -1,3 +1,9 @@
+## LandMark
+<img src="https://github.com/dhruvchowdhary/LandMark/blob/main/Compass/Compass/Assets.xcassets/AppIcon.appiconset/appicon.jpg" width="170">
+LandMark was created during LaHacks 2023 with a 36-hour constraint. Contributors: Dhruv Chowdhary, Shivan Patel, and Rohan Taneja.
+
+https://devpost.com/software/compass-j8kzlu
+
 ## Inspiration
 Imagine you're out camping at night and need to venture into the wilderness to search for firewood. How do you get back to your tent? All you really have is your unreliable sense of direction. On average, around 2,000 hikers get lost each year while hiking, and we believe that LandMark can help mitigate this issue.
 
