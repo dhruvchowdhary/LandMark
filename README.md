@@ -1,6 +1,6 @@
 ## LandMark
 <img src="https://github.com/dhruvchowdhary/LandMark/blob/main/Compass/Compass/Assets.xcassets/AppIcon.appiconset/appicon.jpg" width="170">
-LandMark was created during LaHacks 2023 with a 36-hour constraint. Contributors: Dhruv Chowdhary, Shivan Patel, and Rohan Taneja.
+LandMark was created during UCLA's LA Hacks 2023 with a 36-hour constraint. Contributors: Dhruv Chowdhary, Shivan Patel, and Rohan Taneja.
 
 https://devpost.com/software/compass-j8kzlu
 
